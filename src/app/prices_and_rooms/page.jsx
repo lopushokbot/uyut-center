@@ -1,0 +1,267 @@
+import Link from "next/link";
+import BookingPanelClient from "../../components/BookingPanelClient";
+import SiteShell from "../../components/SiteShell";
+import { getPageMetadata } from "../../lib/metadata";
+
+export const metadata = getPageMetadata("rooms");
+
+const BREAKFAST_NOTE =
+  "В стоимость проживания включён завтрак по системе «Шведский стол»: с 7:00 до 10:00 по будням и с 8:00 до 11:00 по выходным в ресторане «Метрополь».";
+
+const ROOM_COLLECTION = [
+  {
+    id: "single",
+    name: "Одноместный",
+    subtitle: "Для одной персоны",
+    image:
+      "https://uyut-centr.ru/wp-content/uploads/2021/06/одноместный-5-scaled.jpg",
+    summary:
+      "Компактный и спокойный номер для деловой поездки или короткого отдыха.",
+    description:
+      "Уютный одноместный номер располагает всем необходимым для комфортного отдыха: полутораспальной кроватью 140×200, ковровым покрытием, современной мебелью, шкафом, телевизором, холодильником, набором для чая и кофе, а также бесплатным Wi‑Fi.",
+    details:
+      "Ванная комната оснащена душевой кабиной, феном, комплектом полотенец и косметическими принадлежностями.",
+    features: [
+      "Кровать 140×200",
+      "Душевая кабина",
+      "Телевизор",
+      "Холодильник",
+      "Чай/кофе",
+      "Wi‑Fi",
+    ],
+    price: "от 2 000 ₽",
+  },
+  {
+    id: "comfort",
+    name: "Двухместный комфорт",
+    subtitle: "Класс комфорт",
+    image:
+      "https://uyut-centr.ru/wp-content/uploads/2021/06/Двухместный-комфорт-7-scaled.jpg",
+    summary:
+      "Удобный номер с двумя раздельными кроватями для пары гостей или коллег.",
+    description:
+      "Уютный двухместный номер оснащён двумя раздельными кроватями 90×200, ковровым покрытием и современной мебелью. В номере есть шкаф для одежды, телевизор, холодильник, набор для чая и кофе и бесплатный Wi‑Fi.",
+    details:
+      "Ванная комната укомплектована душевой кабиной, феном, полотенцами и косметическими принадлежностями.",
+    features: [
+      "2 кровати 90×200",
+      "Душевая кабина",
+      "Телевизор",
+      "Холодильник",
+      "Чай/кофе",
+      "Wi‑Fi",
+    ],
+    price: "от 2 800 ₽",
+  },
+  {
+    id: "business",
+    name: "Двухместный бизнес",
+    subtitle: "Бизнес-класс",
+    image:
+      "https://uyut-centr.ru/wp-content/uploads/2021/06/Двухместный-бизнес-10-scaled.jpg",
+    summary:
+      "Более просторный формат для тех, кому нужен комфорт и рабочий ритм.",
+    description:
+      "Просторный и уютный двухместный номер в тёплых тонах подходит как для отдыха, так и для работы. Оснащён двумя раздельными кроватями 90×200, шкафом, телевизором, холодильником, набором для чая и кофе и бесплатным Wi‑Fi.",
+    details:
+      "Ванная комната включает душевую кабину, фен, комплект полотенец и косметические принадлежности.",
+    features: [
+      "2 кровати 90×200",
+      "Просторная планировка",
+      "Телевизор",
+      "Холодильник",
+      "Чай/кофе",
+      "Wi‑Fi",
+    ],
+    price: "от 3 200 ₽",
+  },
+  {
+    id: "luxe",
+    name: "Люкс",
+    subtitle: "Двухкомнатный номер",
+    image:
+      "https://uyut-centr.ru/wp-content/uploads/2021/06/Люкс-10-scaled.jpg",
+    summary:
+      "Самый комфортный вариант с отдельной гостиной и спальней.",
+    description:
+      "Комфортабельный двухкомнатный номер с гостиной и спальней. Внутри двуспальная кровать 180×200, ковровое покрытие, современная мебель, шкаф для одежды, два телевизора и холодильник.",
+    details:
+      "Ванная комната оснащена душевой кабиной, феном, комплектом полотенец, косметическими принадлежностями, халатами и тапочками.",
+    features: [
+      "2 комнаты",
+      "Кровать 180×200",
+      "2 телевизора",
+      "Холодильник",
+      "Халаты и тапочки",
+      "Wi‑Fi",
+    ],
+    price: "от 3 500 ₽",
+  },
+  {
+    id: "junior",
+    name: "Джуниор Сьют",
+    subtitle: "Дополнительное место",
+    image:
+      "https://uyut-centr.ru/wp-content/uploads/2021/06/Семейный-4-scaled.jpg",
+    summary:
+      "Однокомнатный номер для пары гостей с возможностью дополнительного размещения.",
+    description:
+      "Номер категории «Джуниор Сьют» рассчитан на двухместное размещение и допускает дополнительное место. Оснащён большой кроватью, диваном, шкафом для одежды, телевизором и холодильником.",
+    details:
+      "Ванная комната включает душевую кабину, фен, комплект полотенец, косметические принадлежности, халаты и тапочки.",
+    features: [
+      "Кровать 160×200",
+      "Диван",
+      "Доп. место",
+      "Телевизор",
+      "Халаты и тапочки",
+      "Wi‑Fi",
+    ],
+    price: "от 3 500 ₽",
+  },
+  {
+    id: "triple",
+    name: "Трёхместный",
+    subtitle: "Для двух или трёх гостей",
+    image:
+      "https://uyut-centr.ru/wp-content/uploads/2021/06/трехместный-4-scaled.jpg",
+    summary:
+      "Практичный вариант для небольшой компании или семейной поездки.",
+    description:
+      "Уютный трёхместный номер подходит тем, кто путешествует вдвоём или втроём. В номере три раздельные кровати 90×200, ковровое покрытие, современная мебель, шкаф, телевизор, холодильник, набор для чая и кофе и бесплатный Wi‑Fi.",
+    details:
+      "Ванная комната оснащена душевой кабиной, феном, полотенцами и косметическими принадлежностями.",
+    features: [
+      "3 кровати 90×200",
+      "Душевая кабина",
+      "Телевизор",
+      "Холодильник",
+      "Чай/кофе",
+      "Wi‑Fi",
+    ],
+    price: "по запросу",
+  },
+  {
+    id: "halfluxe",
+    name: "Полулюкс",
+    subtitle: "Повышенный комфорт",
+    image:
+      "https://uyut-centr.ru/wp-content/uploads/2021/06/Полулюкс-8-scaled.jpg",
+    summary:
+      "Однокомнатный номер с большой двуспальной кроватью и расширенным набором удобств.",
+    description:
+      "Полулюкс оборудован большой двуспальной кроватью 180×200, ковровым покрытием, современной мебелью, шкафом для одежды, телевизором и холодильником.",
+    details:
+      "Ванная комната включает душевую кабину, фен, комплект полотенец, косметические принадлежности, халаты и тапочки.",
+    features: [
+      "Кровать 180×200",
+      "Телевизор",
+      "Холодильник",
+      "Душевая кабина",
+      "Халаты и тапочки",
+      "Wi‑Fi",
+    ],
+    price: "от 3 200 ₽",
+  },
+];
+
+const QUICK_FACTS = [
+  { value: "7", label: "категорий номеров" },
+  { value: "Wi‑Fi", label: "во всех категориях" },
+  { value: "Завтрак", label: "включён в стоимость" },
+];
+
+export default function RoomsPage() {
+  return (
+    <SiteShell>
+      <section className="page-hero rooms-page-hero">
+        <div className="page-hero-bg rooms-page-hero-bg" />
+        <div className="page-hero-content page-container rooms-page-hero-content">
+          <div className="hero-stars page-eyebrow">Размещение в центре Клинцов</div>
+          <h1 className="page-hero-title">Снять номер в гостинице «Уют»</h1>
+          <p className="page-hero-desc">
+            Подобрали страницу под реальный номерной фонд из старого сайта:
+            от одноместных вариантов до люкса и семейного формата.
+          </p>
+          <div className="rooms-page-facts">
+            {QUICK_FACTS.map((fact) => (
+              <div className="rooms-page-fact" key={fact.label}>
+                <strong>{fact.value}</strong>
+                <span>{fact.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <BookingPanelClient />
+
+      <section className="section fade-section visible">
+        <div className="page-container rooms-page-breakfast">
+          <div>
+            <div className="section-label">Условия проживания</div>
+            <h2 className="section-title">Завтрак уже включён</h2>
+          </div>
+          <p>{BREAKFAST_NOTE}</p>
+        </div>
+      </section>
+
+      <section className="section section-dark fade-section visible">
+        <div className="page-container">
+          <div className="offers-header rooms-page-header">
+            <div className="section-label">Подробнее</div>
+            <h2 className="section-title">Что входит в каждый номер</h2>
+          </div>
+
+          <div className="rooms-page-detail-list">
+            {ROOM_COLLECTION.map((room, index) => (
+              <article
+                className={`rooms-page-detail ${index % 2 ? "is-reversed" : ""}`}
+                key={room.id}
+              >
+                <div className="rooms-page-detail-visual">
+                  <img src={room.image} alt={room.name} />
+                </div>
+                <div className="rooms-page-detail-copy">
+                  <div className="rooms-page-detail-topline">
+                    <span>{room.subtitle}</span>
+                    <strong>{room.price}</strong>
+                  </div>
+                  <h3 className="rooms-page-detail-title">{room.name}</h3>
+                  <p className="rooms-page-detail-text">{room.description}</p>
+                  <p className="rooms-page-detail-text">{room.details}</p>
+                  <div className="rooms-page-detail-features">
+                    {room.features.map((feature) => (
+                      <span className="rooms-page-detail-feature" key={feature}>
+                        {feature}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section fade-section visible">
+        <div className="page-container cta-banner">
+          <div>
+            <div className="section-label">Следующий шаг</div>
+            <h2 className="section-title">
+              Нужен номер на конкретные даты или помощь с выбором
+            </h2>
+          </div>
+          <div className="rooms-page-cta-actions">
+            <Link className="hero-btn about-page-secondary-btn" href="/contact/">
+              Связаться с отелем
+            </Link>
+            <a className="hero-btn" href="tel:+79307224888">
+              Позвонить
+            </a>
+          </div>
+        </div>
+      </section>
+    </SiteShell>
+  );
+}
