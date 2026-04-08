@@ -21,11 +21,6 @@ export default function HotelUyut() {
   const [callbackOpen, setCallbackOpen] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("Банковская карта");
   const [reviewIdx, setReviewIdx] = useState(0);
-  const [bookingData, setBookingData] = useState({
-    checkin: "",
-    checkout: "",
-    guests: "2",
-  });
   const [roomImgErrors, setRoomImgErrors] = useState({});
 
   useEffect(() => {
@@ -71,19 +66,6 @@ export default function HotelUyut() {
 
   const closeMobile = () => setMobileMenu(false);
 
-  const handleBookingChange = (field) => (event) => {
-    setBookingData((prev) => ({
-      ...prev,
-      [field]: event.target.value,
-    }));
-  };
-
-  const handleBookingSubmit = () => {
-    alert(
-      `Запрос на бронирование:\nЗаезд: ${bookingData.checkin}\nВыезд: ${bookingData.checkout}\nГости: ${bookingData.guests}\n\n(Интеграция с Контур.Отель — endpoint подключается)`,
-    );
-  };
-
   const handleRoomImgError = (id) => {
     setRoomImgErrors((prev) => ({
       ...prev,
@@ -106,11 +88,7 @@ export default function HotelUyut() {
 
       <HeroSection />
 
-      <BookingStrip
-        bookingData={bookingData}
-        onBookingChange={handleBookingChange}
-        onBookingSubmit={handleBookingSubmit}
-      />
+      <BookingStrip />
 
       <AboutSection />
       <RoomsSection
