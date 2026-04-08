@@ -1,0 +1,17 @@
+{
+  "name": "hotel-uyut",
+  "version": "1.0.0",
+  "description": "Современный сайт гостиницы «Уют» — трёхзвёздочный отель в г. Клинцы",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "^15.3.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
+}
