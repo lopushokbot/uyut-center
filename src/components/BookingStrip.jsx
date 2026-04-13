@@ -24,7 +24,9 @@ function loadWidgetScript() {
       );
 
       if (existingScript) {
-        existingScript.addEventListener("load", () => resolve(window.HotelWidget));
+        existingScript.addEventListener("load", () =>
+          resolve(window.HotelWidget),
+        );
         existingScript.addEventListener("error", reject);
         return;
       }
@@ -76,18 +78,15 @@ export default function BookingStrip() {
           widgetInitialized = true;
         }
 
-        [
-          bookingFormId,
-          roomsListId,
-          calendarId,
-          mobileButtonId,
-        ].forEach((containerId) => {
-          const container = document.getElementById(containerId);
+        [bookingFormId, roomsListId, calendarId, mobileButtonId].forEach(
+          (containerId) => {
+            const container = document.getElementById(containerId);
 
-          if (container) {
-            container.innerHTML = "";
-          }
-        });
+            if (container) {
+              container.innerHTML = "";
+            }
+          },
+        );
 
         HotelWidget.add({
           type: "bookingForm",
@@ -137,32 +136,7 @@ export default function BookingStrip() {
         />
       </div>
 
-      <div className="section section-light booking-widget-details">
-        <div className="content wide">
-          <div className="section-header">
-            <span className="eyebrow">Онлайн-бронирование</span>
-            <h2>Проверяйте наличие и бронируйте номер сразу на сайте</h2>
-          </div>
-
-          <div className="booking-widget-grid">
-            <div
-              id={roomsListId}
-              className="booking-widget-container booking-widget-rooms"
-            />
-            <aside className="booking-widget-sidebar">
-              <div
-                id={calendarId}
-                className="booking-widget-container booking-widget-calendar"
-              />
-            </aside>
-          </div>
-        </div>
-      </div>
-
-      <div
-        id={mobileButtonId}
-        className="booking-widget-mobile-button"
-      />
+      <div id={mobileButtonId} className="booking-widget-mobile-button" />
     </section>
   );
 }

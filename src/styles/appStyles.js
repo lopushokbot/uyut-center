@@ -182,15 +182,27 @@ body {
 }
 .hero-btn {
   display: inline-block; padding: 18px 56px;
-  border: 1px solid var(--gold); background: rgba(184,150,62,.08);
-  color: var(--cream); font-family: var(--font-body);
+  border: 1px solid rgba(184,150,62,.26);
+  background: rgba(255,255,255,.92);
+  color: var(--dark); font-family: var(--font-body);
   font-size: .78rem; font-weight: 500; letter-spacing: 3px; text-transform: uppercase;
   cursor: pointer; transition: all .4s var(--ease); text-decoration: none;
+  box-shadow: 0 14px 34px rgba(26, 26, 26, .08);
 }
 .hero-btn:hover { background: var(--gold); border-color: var(--gold); color: #fff; }
+.hero .hero-btn,
 .page-hero .hero-btn,
 .section-dark .hero-btn {
-  background: transparent;
+  background: rgba(184,150,62,.08);
+  border-color: var(--gold);
+  color: #fff;
+  box-shadow: none;
+}
+.hero .hero-btn:hover,
+.page-hero .hero-btn:hover,
+.section-dark .hero-btn:hover {
+  background: var(--gold);
+  border-color: var(--gold);
   color: #fff;
 }
 .hero-scroll {
@@ -479,6 +491,17 @@ body {
   transition: background .3s;
 }
 .contact-submit:hover { background: var(--gold); }
+.contact-submit:disabled {
+  opacity: .7;
+  cursor: wait;
+}
+.form-status-message {
+  margin: 0;
+  font-size: .82rem;
+  line-height: 1.6;
+}
+.form-status-message.is-success { color: #2f7a44; }
+.form-status-message.is-error { color: #b13b2d; }
 
 .payment-method {
   flex: 1; min-width: 120px; padding: 18px 12px; border: 1px solid #e0d8cc;

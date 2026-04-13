@@ -1,10 +1,12 @@
+import ContactForm from "./ContactForm";
+
 export default function ContactsSection() {
   return (
     <>
       <section className="fade-section" id="contacts">
         <div className="map-container">
           <iframe
-            src="https://yandex.ru/map-widget/v1/?um=constructor%3A0a6b5e6c3c3f2a4e&source=constructor&ll=32.238888%2C52.757778&z=16&pt=32.238888%2C52.757778%2Cpm2rdm"
+            src="https://yandex.ru/map-widget/v1/?um=constructor%3A0a6b5e6c3c3f2a4e&source=constructor&ll=32.235271%2C52.7498408&z=16&pt=32.235271%2C52.749840%2Cpm2rdm"
             title="Гостиница Уют на карте"
             allowFullScreen
             loading="lazy"
@@ -20,7 +22,9 @@ export default function ContactsSection() {
             <div className="gold-line" />
             <div className="contact-item">
               <div className="contact-label">Адрес</div>
-              <div className="contact-value">г. Клинцы, ул. К. Маркса, д. 1</div>
+              <div className="contact-value">
+                г. Клинцы, ул. К. Маркса, д. 1
+              </div>
             </div>
             <div className="contact-item">
               <div className="contact-label">Телефон</div>
@@ -47,13 +51,7 @@ export default function ContactsSection() {
             <div className="section-label" style={{ marginBottom: 20 }}>
               Напишите нам
             </div>
-            <div className="contact-form">
-              <input type="text" placeholder="Ваше имя" />
-              <input type="tel" placeholder="Телефон" />
-              <input type="email" placeholder="Email" />
-              <textarea placeholder="Сообщение" />
-              <button className="contact-submit">Отправить</button>
-            </div>
+            <ContactForm preset="contact" source="home_contacts_section" />
           </div>
         </div>
       </section>
