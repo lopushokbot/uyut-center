@@ -1,6 +1,10 @@
 import { ROOMS } from "../data/hotelData";
 
-export default function RoomsSection({ onRoomImgError, roomImgErrors }) {
+export default function RoomsSection({
+  onBookRoom,
+  onRoomImgError,
+  roomImgErrors,
+}) {
   return (
     <section className="section rooms-section fade-section" id="rooms">
       <div className="rooms-header">
@@ -47,6 +51,13 @@ export default function RoomsSection({ onRoomImgError, roomImgErrors }) {
                   </span>
                 ))}
               </div>
+              <button
+                className="room-card-book-btn"
+                onClick={() => onBookRoom?.(room)}
+                type="button"
+              >
+                Забронировать
+              </button>
             </div>
           </div>
         ))}

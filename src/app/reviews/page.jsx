@@ -2,6 +2,7 @@ import PageHero from "../../components/PageHero";
 import SiteShell from "../../components/SiteShell";
 import { REVIEWS } from "../../data/hotelData";
 import { getPageMetadata } from "../../lib/metadata";
+import styles from "./page.module.css";
 
 export const metadata = getPageMetadata("reviews");
 
@@ -15,9 +16,9 @@ export default function ReviewsPage() {
       />
       <section className="section section-dark fade-section visible">
         <div className="page-container">
-          <div className="reviews-list">
+          <div className={styles.list}>
             {REVIEWS.map((review) => (
-              <article className="reviews-card-static" key={review.author}>
+              <article className={styles.card} key={review.author}>
                 <div className="review-stars">{"★".repeat(review.rating)}</div>
                 <p className="review-text">{review.text}</p>
                 <p className="review-author">{review.author}</p>

@@ -1,4 +1,4 @@
-import { css } from "../styles/appStyles";
+import "./globals.css";
 import { SITE_NAME, SITE_URL } from "../data/siteData";
 
 export const metadata = {
@@ -12,7 +12,6 @@ export default function RootLayout({ children }) {
   return (
     <html lang="ru">
       <body>
-        <style>{css}</style>
         {children}
       </body>
     </html>

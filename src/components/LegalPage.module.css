@@ -1,0 +1,30 @@
+.copy {
+  display: grid;
+  gap: 28px;
+  max-width: 860px;
+}
+
+.copy article {
+  background: #fff;
+  padding: 32px;
+  border: 1px solid rgba(184,150,62,.14);
+  box-shadow: 0 16px 50px rgba(26, 26, 26, .06);
+}
+
+.heading {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  margin-bottom: 16px;
+  color: var(--dark);
+}
+
+.copy p {
+  color: var(--text-light);
+  line-height: 1.9;
+  font-size: .95rem;
+  margin-bottom: 14px;
+}
+
+.copy p:last-child {
+  margin-bottom: 0;
+}

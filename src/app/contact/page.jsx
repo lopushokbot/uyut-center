@@ -1,6 +1,7 @@
 import SiteShell from "../../components/SiteShell";
 import ContactForm from "../../components/ContactForm";
 import { getPageMetadata } from "../../lib/metadata";
+import styles from "./page.module.css";
 
 export const metadata = getPageMetadata("contacts");
 
@@ -34,18 +35,18 @@ const CONTACT_ITEMS = [
 export default function ContactPage() {
   return (
     <SiteShell>
-      <section className="page-hero contact-page-hero">
-        <div className="page-hero-bg contact-page-hero-bg" />
-        <div className="page-hero-content page-container contact-page-hero-content">
+      <section className={`page-hero ${styles.hero}`}>
+        <div className={`page-hero-bg ${styles.heroBg}`} />
+        <div className="page-hero-content page-container">
           <div className="hero-stars page-eyebrow">Связь с гостиницей</div>
           <h1 className="page-hero-title">Контакты</h1>
           <p className="page-hero-desc">
             На основе исходной страницы контактов собрал более цельный экран:
             адрес, телефон, email, карта и понятный блок для обратной связи.
           </p>
-          <div className="contact-page-facts">
+          <div className={styles.facts}>
             {CONTACT_FACTS.map((fact) => (
-              <div className="contact-page-fact" key={fact.label}>
+              <div className={styles.fact} key={fact.label}>
                 <strong>{fact.value}</strong>
                 <span>{fact.label}</span>
               </div>
@@ -55,8 +56,8 @@ export default function ContactPage() {
       </section>
 
       <section className="section fade-section visible">
-        <div className="page-container contact-page-top">
-          <div className="contact-page-summary">
+        <div className={`page-container ${styles.top}`}>
+          <div>
             <div className="section-label">Свяжитесь с нами</div>
             <h2 className="section-title">
               Один адрес для заселения, дороги и вопросов по проживанию
@@ -69,9 +70,9 @@ export default function ContactPage() {
             </p>
           </div>
 
-          <div className="contact-page-panel">
+          <div className={styles.panel}>
             {CONTACT_ITEMS.map((item) => (
-              <div className="contact-page-row" key={item.label}>
+              <div className={styles.row} key={item.label}>
                 <span>{item.label}</span>
                 {item.href ? (
                   <a href={item.href}>{item.value}</a>
@@ -85,8 +86,8 @@ export default function ContactPage() {
       </section>
 
       <section className="section fade-section visible">
-        <div className="page-container contact-page-grid">
-          <div className="contact-page-form-wrap">
+        <div className={`page-container ${styles.grid}`}>
+          <div className={styles.formWrap}>
             <div className="section-label">Остались вопросы?</div>
             <h2 className="section-title">Форма обратной связи</h2>
             <p className="section-desc">
@@ -96,10 +97,10 @@ export default function ContactPage() {
             <ContactForm preset="contact" source="contact_page" />
           </div>
 
-          <div className="contact-page-map-wrap">
+          <div>
             <div className="section-label">Как нас найти</div>
-            <div className="contact-page-map-card">
-              <div className="map-container contact-page-map">
+            <div className={styles.mapCard}>
+              <div className={`map-container ${styles.map}`}>
                 <iframe
                   src="https://yandex.ru/map-widget/v1/?um=constructor%3A0a6b5e6c3c3f2a4e&source=constructor&ll=32.235271%2C52.7498408&z=16&pt=32.235271%2C52.749840%2Cpm2rdm"
                   title="Гостиница Уют на карте"
@@ -107,7 +108,7 @@ export default function ContactPage() {
                   loading="lazy"
                 />
               </div>
-              <div className="contact-page-map-caption">
+              <div className={styles.mapCaption}>
                 г. Клинцы, ул. К. Маркса, д. 1
               </div>
             </div>

@@ -2,6 +2,7 @@ import Link from "next/link";
 import BookingCta from "../../components/BookingCta";
 import SiteShell from "../../components/SiteShell";
 import { getPageMetadata } from "../../lib/metadata";
+import styles from "./page.module.css";
 
 export const metadata = getPageMetadata("about");
 
@@ -58,28 +59,26 @@ const ABOUT_GALLERY = [
   {
     src: "https://uyut-centr.ru/wp-content/uploads/elementor/thumbs/Здание-гостиницы-scaled-pg8ept6syd3d12fsk2jpnyq3e8j50ekax7zkzn0xe8.jpg",
     alt: "Здание гостиницы Уют",
-    className: "about-page-gallery-card about-page-gallery-card-large",
+    large: true,
   },
   {
     src: "https://uyut-centr.ru/wp-content/uploads/elementor/thumbs/274770699-pg8eppfg70vdfnvthniwqgi73gsns69gl9wgxqjmvc.jpg",
     alt: "Интерьер гостиницы Уют",
-    className: "about-page-gallery-card",
   },
   {
     src: "https://uyut-centr.ru/wp-content/uploads/elementor/thumbs/274659013-pg8eppfg70vdfnvthniwqgi73gsns69gl9wgxqjmvc.jpg",
     alt: "Номер гостиницы Уют",
-    className: "about-page-gallery-card",
   },
 ];
 
 export default function AboutPage() {
   return (
     <SiteShell>
-      <section className="page-hero about-page-hero">
-        <div className="page-hero-bg about-page-hero-bg" />
-        <div className="page-hero-content page-container about-page-hero-content">
+      <section className={`page-hero ${styles.hero}`}>
+        <div className={`page-hero-bg ${styles.heroBg}`} />
+        <div className={`page-hero-content page-container ${styles.heroContent}`}>
           <div className="hero-stars page-eyebrow">Тихий ритм центра города</div>
-          <div className="about-page-kicker">
+          <div className={styles.kicker}>
             <span>г. Клинцы</span>
             <span>ул. К. Маркса, 1</span>
           </div>
@@ -88,9 +87,9 @@ export default function AboutPage() {
             Гостиница в центре Клинцов для спокойного отдыха, деловых поездок
             и событий, где важны сервис, удобная локация и понятный комфорт.
           </p>
-          <div className="about-page-stats">
+          <div className={styles.stats}>
             {ABOUT_STATS.map((item) => (
-              <div className="about-page-stat" key={item.label}>
+              <div className={styles.stat} key={item.label}>
                 <strong>{item.value}</strong>
                 <span>{item.label}</span>
               </div>
@@ -100,31 +99,36 @@ export default function AboutPage() {
       </section>
 
       <section className="section fade-section visible">
-        <div className="page-container about-page-intro">
-          <div className="about-page-copy">
+        <div className={`page-container ${styles.intro}`}>
+          <div>
             <div className="section-label">Гостиница «Уют»</div>
             <h2 className="section-title">
               Пространство для отдыха, дороги и деловых встреч
             </h2>
             <div className="gold-line" />
-            <div className="about-page-story">
+            <div className={styles.story}>
               {ABOUT_STORY.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
             </div>
-            <div className="about-page-feature-list">
+            <div className={styles.featureList}>
               {ABOUT_FEATURES.map((feature) => (
-                <div className="about-page-feature-item" key={feature}>
-                  <span className="about-page-feature-dot" />
+                <div className={styles.featureItem} key={feature}>
+                  <span className={styles.featureDot} />
                   <span>{feature}</span>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="about-page-gallery">
+          <div className={styles.gallery}>
             {ABOUT_GALLERY.map((image) => (
-              <div className={image.className} key={image.src}>
+              <div
+                className={`${styles.galleryCard} ${
+                  image.large ? styles.galleryCardLarge : ""
+                }`.trim()}
+                key={image.src}
+              >
                 <img src={image.src} alt={image.alt} />
               </div>
             ))}
@@ -134,7 +138,7 @@ export default function AboutPage() {
 
       <section className="section section-dark fade-section visible">
         <div className="page-container">
-          <div className="offers-header about-page-offers-header">
+          <div className={`offers-header ${styles.offersHeader}`}>
             <div className="section-label">Специальные предложения</div>
             <h2 className="section-title">Условия, которые делают проживание удобнее</h2>
             <p className="section-desc">
@@ -143,17 +147,17 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <div className="about-page-offers-grid">
+          <div className={styles.offersGrid}>
             {ABOUT_OFFERS.map((offer) => (
-              <article className="about-page-offer-card" key={offer.title}>
-                <div className="about-page-offer-accent">{offer.accent}</div>
-                <h3 className="about-page-offer-title">{offer.title}</h3>
-                <p className="about-page-offer-text">{offer.text}</p>
+              <article className={styles.offerCard} key={offer.title}>
+                <div className={styles.offerAccent}>{offer.accent}</div>
+                <h3 className={styles.offerTitle}>{offer.title}</h3>
+                <p className={styles.offerText}>{offer.text}</p>
               </article>
             ))}
           </div>
 
-          <div className="cta-row about-page-offers-cta">
+          <div className={`cta-row ${styles.offersCta}`}>
             <Link className="hero-btn" href="/disconts/">
               Все предложения
             </Link>
@@ -162,8 +166,8 @@ export default function AboutPage() {
       </section>
 
       <section className="section fade-section visible">
-        <div className="page-container about-page-location">
-          <div className="about-page-location-panel">
+        <div className={`page-container ${styles.location}`}>
+          <div className={styles.locationPanel}>
             <div className="section-label">Почему это удобно</div>
             <h2 className="section-title">Локация, где всё рядом</h2>
             <p className="section-desc">
@@ -173,20 +177,20 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <div className="about-page-location-card">
-            <div className="about-page-location-row">
+          <div className={styles.locationCard}>
+            <div className={styles.locationRow}>
               <span>Адрес</span>
               <strong>г. Клинцы, ул. К. Маркса, д. 1</strong>
             </div>
-            <div className="about-page-location-row">
+            <div className={styles.locationRow}>
               <span>Телефон</span>
               <a href="tel:+79307224888">+7 (930) 722-48-88</a>
             </div>
-            <div className="about-page-location-row">
+            <div className={styles.locationRow}>
               <span>Рядом</span>
               <strong>Центральная площадь, вокзал, ресторан, парковка</strong>
             </div>
-            <div className="about-page-location-actions">
+            <div className={styles.locationActions}>
               <Link className="hero-btn about-page-secondary-btn" href="/contact/">
                 Контакты
               </Link>

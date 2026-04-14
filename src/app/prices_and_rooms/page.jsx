@@ -1,7 +1,7 @@
-import Link from "next/link";
-import BookingPanelClient from "../../components/BookingPanelClient";
+import RoomsPageContentClient from "../../components/RoomsPageContentClient";
 import SiteShell from "../../components/SiteShell";
 import { getPageMetadata } from "../../lib/metadata";
+import styles from "../../components/RoomsPage.module.css";
 
 export const metadata = getPageMetadata("rooms");
 
@@ -174,18 +174,18 @@ const QUICK_FACTS = [
 export default function RoomsPage() {
   return (
     <SiteShell>
-      <section className="page-hero rooms-page-hero">
-        <div className="page-hero-bg rooms-page-hero-bg" />
-        <div className="page-hero-content page-container rooms-page-hero-content">
+      <section className={`page-hero ${styles.hero}`}>
+        <div className={`page-hero-bg ${styles.heroBg}`} />
+        <div className="page-hero-content page-container">
           <div className="hero-stars page-eyebrow">Размещение в центре Клинцов</div>
           <h1 className="page-hero-title">Снять номер в гостинице «Уют»</h1>
           <p className="page-hero-desc">
             Подобрали страницу под реальный номерной фонд из старого сайта:
             от одноместных вариантов до люкса и семейного формата.
           </p>
-          <div className="rooms-page-facts">
+          <div className={styles.facts}>
             {QUICK_FACTS.map((fact) => (
-              <div className="rooms-page-fact" key={fact.label}>
+              <div className={styles.fact} key={fact.label}>
                 <strong>{fact.value}</strong>
                 <span>{fact.label}</span>
               </div>
@@ -194,74 +194,10 @@ export default function RoomsPage() {
         </div>
       </section>
 
-      <BookingPanelClient />
-
-      <section className="section fade-section visible">
-        <div className="page-container rooms-page-breakfast">
-          <div>
-            <div className="section-label">Условия проживания</div>
-            <h2 className="section-title">Завтрак уже включён</h2>
-          </div>
-          <p>{BREAKFAST_NOTE}</p>
-        </div>
-      </section>
-
-      <section className="section section-dark fade-section visible">
-        <div className="page-container">
-          <div className="offers-header rooms-page-header">
-            <div className="section-label">Подробнее</div>
-            <h2 className="section-title">Что входит в каждый номер</h2>
-          </div>
-
-          <div className="rooms-page-detail-list">
-            {ROOM_COLLECTION.map((room, index) => (
-              <article
-                className={`rooms-page-detail ${index % 2 ? "is-reversed" : ""}`}
-                key={room.id}
-              >
-                <div className="rooms-page-detail-visual">
-                  <img src={room.image} alt={room.name} />
-                </div>
-                <div className="rooms-page-detail-copy">
-                  <div className="rooms-page-detail-topline">
-                    <span>{room.subtitle}</span>
-                    <strong>{room.price}</strong>
-                  </div>
-                  <h3 className="rooms-page-detail-title">{room.name}</h3>
-                  <p className="rooms-page-detail-text">{room.description}</p>
-                  <p className="rooms-page-detail-text">{room.details}</p>
-                  <div className="rooms-page-detail-features">
-                    {room.features.map((feature) => (
-                      <span className="rooms-page-detail-feature" key={feature}>
-                        {feature}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section fade-section visible">
-        <div className="page-container cta-banner">
-          <div>
-            <div className="section-label">Следующий шаг</div>
-            <h2 className="section-title">
-              Нужен номер на конкретные даты или помощь с выбором
-            </h2>
-          </div>
-          <div className="rooms-page-cta-actions">
-            <Link className="hero-btn about-page-secondary-btn" href="/contact/">
-              Связаться с отелем
-            </Link>
-            <a className="hero-btn" href="tel:+79307224888">
-              Позвонить
-            </a>
-          </div>
-        </div>
-      </section>
+      <RoomsPageContentClient
+        breakfastNote={BREAKFAST_NOTE}
+        rooms={ROOM_COLLECTION}
+      />
     </SiteShell>
   );
 }

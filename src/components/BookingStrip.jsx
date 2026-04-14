@@ -43,7 +43,72 @@ function loadWidgetScript() {
   return widgetScriptPromise;
 }
 
-export default function BookingStrip() {
+function trySelectRoom(containerId, selectedRoomName) {
+  if (!selectedRoomName || typeof window === "undefined") {
+    return;
+  }
+
+  const container = document.getElementById(containerId);
+
+  if (!container) {
+    return;
+  }
+
+  const normalize = (value) =>
+    value
+      .replace(/\s+/g, " ")
+      .trim()
+      .toLowerCase();
+
+  const targetRoomName = normalize(selectedRoomName);
+  const clickableSelectors = [
+    "button",
+    "a",
+    "[role='button']",
+    "[data-room-id]",
+    "[data-testid]",
+  ].join(", ");
+
+  const findAndClickRoom = () => {
+    const clickableElements = Array.from(
+      container.querySelectorAll(clickableSelectors),
+    );
+
+    const directAction = clickableElements.find((element) =>
+      normalize(element.textContent || "").includes(targetRoomName),
+    );
+
+    if (directAction) {
+      directAction.click();
+      return true;
+    }
+
+    const matchingBlock = Array.from(container.querySelectorAll("*")).find(
+      (element) => normalize(element.textContent || "").includes(targetRoomName),
+    );
+
+    const nestedAction = matchingBlock?.querySelector(clickableSelectors);
+
+    if (nestedAction) {
+      nestedAction.click();
+      return true;
+    }
+
+    return false;
+  };
+
+  if (findAndClickRoom()) {
+    return;
+  }
+
+  window.setTimeout(findAndClickRoom, 700);
+}
+
+export default function BookingStrip({
+  className = "",
+  mode = "inline",
+  selectedRoomName,
+}) {
   const widgetId = useId().replace(/[^a-zA-Z0-9_-]/g, "");
   const bookingFormId = `booking-form-${widgetId}`;
   const roomsListId = `rooms-list-${widgetId}`;
@@ -52,6 +117,7 @@ export default function BookingStrip() {
 
   useEffect(() => {
     let cancelled = false;
+    let widgetIds = [];
 
     loadWidgetScript()
       .then((HotelWidget) => {
@@ -88,35 +154,43 @@ export default function BookingStrip() {
           },
         );
 
-        HotelWidget.add({
+        const bookingWidget = HotelWidget.add({
           type: "bookingForm",
           inline: true,
           appearance: {
             container: bookingFormId,
           },
         });
+        widgetIds.push(bookingWidget.id);
 
-        HotelWidget.add({
-          type: "roomsList",
-          appearance: {
-            container: roomsListId,
-          },
-        });
+        if (mode === "modal") {
+          const roomsWidget = HotelWidget.add({
+            type: "roomsList",
+            appearance: {
+              container: roomsListId,
+            },
+          });
+          widgetIds.push(roomsWidget.id);
 
-        HotelWidget.add({
-          type: "availabilityCalendar",
-          months: 1,
-          appearance: {
-            container: calendarId,
-          },
-        });
+          const calendarWidget = HotelWidget.add({
+            type: "availabilityCalendar",
+            months: 1,
+            appearance: {
+              container: calendarId,
+            },
+          });
+          widgetIds.push(calendarWidget.id);
 
-        HotelWidget.add({
+          trySelectRoom(roomsListId, selectedRoomName);
+        }
+
+        const mobileButtonWidget = HotelWidget.add({
           type: "showCheckAvailabilityButtonForMobileDevices",
           appearance: {
             container: mobileButtonId,
           },
         });
+        widgetIds.push(mobileButtonWidget.id);
       })
       .catch((error) => {
         console.error("HotelWidget script load failed", error);
@@ -124,17 +198,69 @@ export default function BookingStrip() {
 
     return () => {
       cancelled = true;
+
+      if (typeof window !== "undefined" && window.HotelWidget) {
+        widgetIds.forEach((widgetId) => {
+          try {
+            window.HotelWidget.remove(widgetId);
+          } catch (error) {
+            console.error("HotelWidget remove failed", error);
+          }
+        });
+      }
     };
-  }, [bookingFormId, roomsListId, calendarId, mobileButtonId]);
+  }, [
+    bookingFormId,
+    roomsListId,
+    calendarId,
+    mobileButtonId,
+    mode,
+    selectedRoomName,
+  ]);
 
   return (
-    <section className="booking-widget-section">
-      <div className="booking-strip booking-widget-shell">
+    <section
+      className={`booking-widget-section ${
+        mode === "modal" ? "booking-widget-section-modal" : ""
+      } ${className}`.trim()}
+    >
+      <div
+        className={`booking-strip booking-widget-shell ${
+          mode === "modal" ? "booking-widget-shell-modal" : ""
+        }`.trim()}
+      >
         <div
           id={bookingFormId}
           className="booking-widget-container booking-widget-form"
         />
       </div>
+
+      {mode === "modal" ? (
+        <div className="booking-widget-details">
+          <div className="booking-widget-header">
+            <div className="section-label">Онлайн-бронирование</div>
+            <h3 className="section-title">Выбор номера и дат проживания</h3>
+            <p className="section-desc">
+              {selectedRoomName
+                ? `Выбранный номер: ${selectedRoomName}. Уточните даты проживания и завершите бронирование.`
+                : "Выберите подходящий номер, даты проживания и завершите бронирование онлайн."}
+            </p>
+          </div>
+
+          <div className="booking-widget-grid">
+            <div
+              id={roomsListId}
+              className="booking-widget-container booking-widget-rooms"
+            />
+            <div className="booking-widget-sidebar">
+              <div
+                id={calendarId}
+                className="booking-widget-container booking-widget-calendar"
+              />
+            </div>
+          </div>
+        </div>
+      ) : null}
 
       <div id={mobileButtonId} className="booking-widget-mobile-button" />
     </section>

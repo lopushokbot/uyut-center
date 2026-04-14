@@ -1,6 +1,7 @@
 import Link from "next/link";
 import SiteShell from "../../components/SiteShell";
 import { getPageMetadata } from "../../lib/metadata";
+import styles from "./page.module.css";
 
 export const metadata = getPageMetadata("offers");
 
@@ -66,9 +67,9 @@ const OFFER_ITEMS = [
 export default function OffersPage() {
   return (
     <SiteShell>
-      <section className="page-hero discounts-page-hero">
-        <div className="page-hero-bg discounts-page-hero-bg" />
-        <div className="page-hero-content page-container discounts-page-hero-content">
+      <section className={`page-hero ${styles.hero}`}>
+        <div className={`page-hero-bg ${styles.heroBg}`} />
+        <div className="page-hero-content page-container">
           <div className="hero-stars page-eyebrow">
             Спецпредложения гостиницы
           </div>
@@ -78,9 +79,9 @@ export default function OffersPage() {
             подарки для молодожёнов, скидки в ресторане и на проживание,
             бесплатный трансфер и конференц-зал.
           </p>
-          <div className="discounts-page-facts">
+          <div className={styles.facts}>
             {OFFER_FACTS.map((fact) => (
-              <div className="discounts-page-fact" key={fact.label}>
+              <div className={styles.fact} key={fact.label}>
                 <strong>{fact.value}</strong>
                 <span>{fact.label}</span>
               </div>
@@ -90,7 +91,7 @@ export default function OffersPage() {
       </section>
 
       <section className="section fade-section visible">
-        <div className="page-container discounts-page-intro">
+        <div className={`page-container ${styles.intro}`}>
           <div>
             <div className="section-label">Актуальные предложения</div>
             <h2 className="section-title">Поводы бронировать напрямую</h2>
@@ -101,7 +102,7 @@ export default function OffersPage() {
               последовательную структуру.
             </p>
           </div>
-          <div className="discounts-page-note">
+          <div className={styles.note}>
             <span>Для отдыха и событий</span>
             <p>
               Предложения охватывают проживание, ресторан и дополнительные
@@ -114,30 +115,30 @@ export default function OffersPage() {
 
       <section className="section section-dark fade-section visible">
         <div className="page-container">
-          <div className="offers-header discounts-page-header">
+          <div className={`offers-header ${styles.header}`}>
             <div className="section-label">Подробно</div>
             <h2 className="section-title">Что именно получает гость</h2>
           </div>
 
-          <div className="discounts-page-detail-list">
+          <div className={styles.detailList}>
             {OFFER_ITEMS.map((offer, index) => (
               <article
-                className={`discounts-page-detail ${index % 2 ? "is-reversed" : ""}`}
+                className={`${styles.detail} ${index % 2 ? styles.isReversed : ""}`.trim()}
                 key={offer.id}
               >
-                <div className="discounts-page-detail-visual">
+                <div className={styles.detailVisual}>
                   <img src={offer.image} alt={offer.title} />
                 </div>
-                <div className="discounts-page-detail-copy">
-                  <div className="discounts-page-detail-topline">
+                <div className={styles.detailCopy}>
+                  <div className={styles.detailTopline}>
                     <span>{offer.kicker}</span>
                     <strong>{offer.accent}</strong>
                   </div>
-                  <h3 className="discounts-page-detail-title">{offer.title}</h3>
-                  <p className="discounts-page-detail-text">{offer.summary}</p>
-                  <div className="discounts-page-detail-tags">
+                  <h3 className={styles.detailTitle}>{offer.title}</h3>
+                  <p className={styles.detailText}>{offer.summary}</p>
+                  <div className={styles.detailTags}>
                     {offer.tags.map((tag) => (
-                      <span className="discounts-page-detail-tag" key={tag}>
+                      <span className={styles.detailTag} key={tag}>
                         {tag}
                       </span>
                     ))}
@@ -157,7 +158,7 @@ export default function OffersPage() {
               Выбрать номер или уточнить условия акции
             </h2>
           </div>
-          <div className="discounts-page-actions">
+          <div className={styles.actions}>
             <Link
               className="hero-btn about-page-secondary-btn"
               href="/prices_and_rooms/"

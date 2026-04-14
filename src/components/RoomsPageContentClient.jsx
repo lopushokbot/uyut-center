@@ -1,0 +1,69 @@
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+import BookingPanelClient from "./BookingPanelClient";
+import BookingModal from "./BookingModal";
+import RoomsPageDetailsClient from "./RoomsPageDetailsClient";
+import styles from "./RoomsPage.module.css";
+
+export default function RoomsPageContentClient({ breakfastNote, rooms }) {
+  const [bookingRoom, setBookingRoom] = useState(null);
+  const [bookingOpen, setBookingOpen] = useState(false);
+
+  const handleBookRoom = (room) => {
+    setBookingRoom(room);
+    setBookingOpen(true);
+  };
+
+  return (
+    <>
+      <BookingPanelClient />
+
+      <section className="section fade-section visible">
+        <div className={`page-container ${styles.breakfast}`}>
+          <div>
+            <div className="section-label">Условия проживания</div>
+            <h2 className="section-title">Завтрак уже включён</h2>
+          </div>
+          <p>{breakfastNote}</p>
+        </div>
+      </section>
+
+      <section className="section section-dark fade-section visible">
+        <div className="page-container">
+          <div className={`offers-header ${styles.header}`}>
+            <div className="section-label">Подробнее</div>
+            <h2 className="section-title">Что входит в каждый номер</h2>
+          </div>
+          <RoomsPageDetailsClient rooms={rooms} onBookRoom={handleBookRoom} />
+        </div>
+      </section>
+
+      <section className="section fade-section visible">
+        <div className="page-container cta-banner">
+          <div>
+            <div className="section-label">Следующий шаг</div>
+            <h2 className="section-title">
+              Нужен номер на конкретные даты или помощь с выбором
+            </h2>
+          </div>
+          <div className={styles.ctaActions}>
+            <Link className="hero-btn about-page-secondary-btn" href="/contact/">
+              Связаться с отелем
+            </Link>
+            <a className="hero-btn" href="tel:+79307224888">
+              Позвонить
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <BookingModal
+        isOpen={bookingOpen}
+        onClose={() => setBookingOpen(false)}
+        selectedRoomName={bookingRoom?.name}
+      />
+    </>
+  );
+}

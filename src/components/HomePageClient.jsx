@@ -13,11 +13,14 @@ import AdvantagesSection from "./AdvantagesSection";
 import ReviewsSection from "./ReviewsSection";
 import PaymentSection from "./PaymentSection";
 import ContactsSection from "./ContactsSection";
+import BookingModal from "./BookingModal";
 
 export default function HomePageClient() {
   const [paymentMethod, setPaymentMethod] = useState("Банковская карта");
   const [reviewIdx, setReviewIdx] = useState(0);
   const [roomImgErrors, setRoomImgErrors] = useState({});
+  const [bookingRoom, setBookingRoom] = useState(null);
+  const [bookingOpen, setBookingOpen] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -53,12 +56,18 @@ export default function HomePageClient() {
     }));
   };
 
+  const handleBookRoom = (room) => {
+    setBookingRoom(room);
+    setBookingOpen(true);
+  };
+
   return (
     <SiteShell>
       <HeroSection />
       <BookingStrip />
       <AboutSection />
       <RoomsSection
+        onBookRoom={handleBookRoom}
         onRoomImgError={handleRoomImgError}
         roomImgErrors={roomImgErrors}
       />
@@ -74,6 +83,11 @@ export default function HomePageClient() {
         onPaymentMethodChange={setPaymentMethod}
       />
       <ContactsSection />
+      <BookingModal
+        isOpen={bookingOpen}
+        onClose={() => setBookingOpen(false)}
+        selectedRoomName={bookingRoom?.name}
+      />
     </SiteShell>
   );
 }

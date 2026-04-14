@@ -2,6 +2,7 @@ import Link from "next/link";
 import SiteShell from "../../components/SiteShell";
 import { RESTAURANT_MENU_URL } from "../../data/hotelData";
 import { getPageMetadata } from "../../lib/metadata";
+import styles from "./page.module.css";
 
 export const metadata = getPageMetadata("restaurant");
 
@@ -37,18 +38,18 @@ const RESTAURANT_FEATURES = [
 export default function MenuPage() {
   return (
     <SiteShell>
-      <section className="page-hero restaurant-page-hero">
-        <div className="page-hero-bg restaurant-page-hero-bg" />
-        <div className="page-hero-content page-container restaurant-page-hero-content">
+      <section className={`page-hero ${styles.hero}`}>
+        <div className={`page-hero-bg ${styles.heroBg}`} />
+        <div className="page-hero-content page-container">
           <div className="hero-stars page-eyebrow">Гастрономия в гостинице</div>
           <h1 className="page-hero-title">Ресторан «Метрополь»</h1>
           <p className="page-hero-desc">
             На основе старой страницы ресторана собрал более выразительный
             экран: ключевые преимущества, атмосфера и быстрый переход к меню.
           </p>
-          <div className="restaurant-page-facts">
+          <div className={styles.facts}>
             {RESTAURANT_FACTS.map((fact) => (
-              <div className="restaurant-page-fact" key={fact.label}>
+              <div className={styles.fact} key={fact.label}>
                 <strong>{fact.value}</strong>
                 <span>{fact.label}</span>
               </div>
@@ -58,8 +59,8 @@ export default function MenuPage() {
       </section>
 
       <section className="section fade-section visible">
-        <div className="page-container restaurant-page-intro">
-          <div className="restaurant-page-copy">
+        <div className={`page-container ${styles.intro}`}>
+          <div>
             <div className="section-label">Ресторан</div>
             <h2 className="section-title">Ужин, завтрак и спокойная пауза без выхода из отеля</h2>
             <div className="gold-line" />
@@ -68,7 +69,7 @@ export default function MenuPage() {
               скидка для гостей, обслуживание в номер и разнообразное меню. Я
               сохранил эти акценты и оформил их в полноценную страницу.
             </p>
-            <div className="restaurant-page-actions">
+            <div className={styles.actions}>
               <a
                 className="hero-btn"
                 href={RESTAURANT_MENU_URL}
@@ -83,12 +84,12 @@ export default function MenuPage() {
             </div>
           </div>
 
-          <div className="restaurant-page-visual">
+          <div className={styles.visual}>
             <img
               src="https://uyut-centr.ru/wp-content/uploads/2021/05/274659011.jpg"
               alt="Ресторан Метрополь"
             />
-            <div className="restaurant-page-visual-badge">
+            <div className={styles.visualBadge}>
               Ресторан при гостинице
             </div>
           </div>
@@ -97,12 +98,12 @@ export default function MenuPage() {
 
       <section className="section fade-section visible">
         <div className="page-container">
-          <div className="restaurant-page-grid">
+          <div className={styles.grid}>
             {RESTAURANT_FEATURES.map((feature) => (
-              <article className="restaurant-page-card" key={feature.title}>
-                <div className="restaurant-page-card-accent">{feature.accent}</div>
-                <h3 className="restaurant-page-card-title">{feature.title}</h3>
-                <p className="restaurant-page-card-text">{feature.text}</p>
+              <article className={styles.card} key={feature.title}>
+                <div className={styles.cardAccent}>{feature.accent}</div>
+                <h3 className={styles.cardTitle}>{feature.title}</h3>
+                <p className={styles.cardText}>{feature.text}</p>
               </article>
             ))}
           </div>
@@ -110,8 +111,8 @@ export default function MenuPage() {
       </section>
 
       <section className="section section-dark fade-section visible">
-        <div className="page-container restaurant-page-highlight">
-          <div className="restaurant-page-highlight-copy">
+        <div className={`page-container ${styles.highlight}`}>
+          <div className={styles.highlightCopy}>
             <div className="section-label">Метрополь</div>
             <h2 className="section-title">Комфортный ресторанный формат внутри поездки</h2>
             <p className="section-desc">
@@ -120,16 +121,16 @@ export default function MenuPage() {
               блюд прямо в номер.
             </p>
           </div>
-          <div className="restaurant-page-highlight-list">
-            <div className="restaurant-page-highlight-item">
+          <div className={styles.highlightList}>
+            <div className={styles.highlightItem}>
               <span>01</span>
               <p>Подходит для гостей отеля, деловых встреч и спокойных ужинов.</p>
             </div>
-            <div className="restaurant-page-highlight-item">
+            <div className={styles.highlightItem}>
               <span>02</span>
               <p>Скидка 10% делает посещение ресторана частью гостевого сервиса.</p>
             </div>
-            <div className="restaurant-page-highlight-item">
+            <div className={styles.highlightItem}>
               <span>03</span>
               <p>Внешнее меню доступно отдельно, поэтому страница ведёт прямо к выбору блюд.</p>
             </div>
@@ -143,7 +144,7 @@ export default function MenuPage() {
             <div className="section-label">Меню и бронирование</div>
             <h2 className="section-title">Перейти к меню или выбрать номер с рестораном под рукой</h2>
           </div>
-          <div className="restaurant-page-actions">
+          <div className={styles.actions}>
             <a
               className="hero-btn"
               href={RESTAURANT_MENU_URL}
