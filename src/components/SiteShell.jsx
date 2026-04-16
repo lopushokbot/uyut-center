@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Navigation from "./Navigation";
 import Footer from "./Footer";
 import CallbackModal from "./CallbackModal";
+import { CallbackModalProvider } from "./CallbackModalContext";
 import { NAV_ITEMS } from "../data/siteData";
 
 export default function SiteShell({ children }) {
@@ -27,21 +28,28 @@ export default function SiteShell({ children }) {
   }, [mobileMenu]);
 
   return (
-    <div className="page-shell">
-      <Navigation
-        mobileMenu={mobileMenu}
-        navItems={NAV_ITEMS}
-        onCloseMobile={() => setMobileMenu(false)}
-        onOpenCallback={() => setCallbackOpen(true)}
-        onToggleMobileMenu={() => setMobileMenu((prev) => !prev)}
-        scrolled={scrolled}
-      />
-      <main>{children}</main>
-      <Footer navItems={NAV_ITEMS} />
-      <CallbackModal
-        isOpen={callbackOpen}
-        onClose={() => setCallbackOpen(false)}
-      />
-    </div>
+    <CallbackModalProvider
+      value={{
+        open: () => setCallbackOpen(true),
+        close: () => setCallbackOpen(false),
+      }}
+    >
+      <div className="page-shell">
+        <Navigation
+          mobileMenu={mobileMenu}
+          navItems={NAV_ITEMS}
+          onCloseMobile={() => setMobileMenu(false)}
+          onOpenCallback={() => setCallbackOpen(true)}
+          onToggleMobileMenu={() => setMobileMenu((prev) => !prev)}
+          scrolled={scrolled}
+        />
+        <main>{children}</main>
+        <Footer navItems={NAV_ITEMS} />
+        <CallbackModal
+          isOpen={callbackOpen}
+          onClose={() => setCallbackOpen(false)}
+        />
+      </div>
+    </CallbackModalProvider>
   );
 }

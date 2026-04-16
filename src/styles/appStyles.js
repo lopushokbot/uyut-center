@@ -484,6 +484,12 @@ body {
   overflow: hidden;
 }
 .booking-widget-mobile-button { position: relative; z-index: 12; }
+.booking-widget-room-match {
+  position: relative;
+  box-shadow: 0 0 0 2px rgba(184, 150, 62, .85);
+  transition: box-shadow .25s ease, transform .25s ease;
+  transform: translateY(-2px);
+}
 @media (max-width: 980px) {
   .booking-widget-grid { grid-template-columns: 1fr; }
   .booking-widget-sidebar { position: static; }

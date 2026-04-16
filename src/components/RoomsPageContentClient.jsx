@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import BookingPanelClient from "./BookingPanelClient";
 import BookingModal from "./BookingModal";
+import OpenCallbackButton from "./OpenCallbackButton";
 import RoomsPageDetailsClient from "./RoomsPageDetailsClient";
 import styles from "./RoomsPage.module.css";
 
@@ -49,9 +50,9 @@ export default function RoomsPageContentClient({ breakfastNote, rooms }) {
             </h2>
           </div>
           <div className={styles.ctaActions}>
-            <Link className="hero-btn about-page-secondary-btn" href="/contact/">
+            <OpenCallbackButton className="hero-btn about-page-secondary-btn">
               Связаться с отелем
-            </Link>
+            </OpenCallbackButton>
             <a className="hero-btn" href="tel:+79307224888">
               Позвонить
             </a>
@@ -63,6 +64,7 @@ export default function RoomsPageContentClient({ breakfastNote, rooms }) {
         isOpen={bookingOpen}
         onClose={() => setBookingOpen(false)}
         selectedRoomName={bookingRoom?.name}
+        selectedWidgetRoomName={bookingRoom?.widgetRoomName}
       />
     </>
   );

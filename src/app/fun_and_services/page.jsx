@@ -1,5 +1,6 @@
 import Link from "next/link";
 import SiteShell from "../../components/SiteShell";
+import OpenCallbackButton from "../../components/OpenCallbackButton";
 import { getPageMetadata } from "../../lib/metadata";
 import styles from "./page.module.css";
 
@@ -8,7 +9,7 @@ export const metadata = getPageMetadata("services");
 const SERVICE_FACTS = [
   { value: "24/7", label: "парковка для гостей" },
   { value: "500 ₽", label: "конференц-зал в час" },
-  { value: "Free", label: "трансфер до/от вокзала" },
+  { value: "Сауна", label: "для отдыха после дороги" },
 ];
 
 const SERVICE_ITEMS = [
@@ -57,6 +58,18 @@ const SERVICE_ITEMS = [
       "Гости могут воспользоваться услугами прачечной во время проживания.",
     tags: ["Уход за вещами", "Для командировок", "По запросу"],
   },
+  {
+    id: "sauna",
+    name: "Сауна",
+    kicker: "Для отдыха и восстановления",
+    image:
+      "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23241b14'/%3E%3Cstop offset='55%25' stop-color='%23352a1f'/%3E%3Cstop offset='100%25' stop-color='%23b8963e'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1200' height='800' fill='url(%23bg)'/%3E%3Ccircle cx='950' cy='180' r='180' fill='rgba(255,255,255,0.08)'/%3E%3Ccircle cx='280' cy='620' r='220' fill='rgba(255,255,255,0.05)'/%3E%3Cpath d='M420 520c0-120 70-190 180-190s180 70 180 190' fill='none' stroke='rgba(255,255,255,0.24)' stroke-width='20' stroke-linecap='round'/%3E%3Cpath d='M520 280c-25-32-25-66 0-102M600 260c-25-32-25-66 0-102M680 280c-25-32-25-66 0-102' fill='none' stroke='rgba(255,255,255,0.35)' stroke-width='14' stroke-linecap='round'/%3E%3Ctext x='600' y='630' text-anchor='middle' fill='white' font-family='Arial, sans-serif' font-size='78' letter-spacing='10'%3ESAUNA%3C/text%3E%3C/svg%3E",
+    summary:
+      "Спокойное пространство, где можно восстановиться после дороги или насыщенного дня.",
+    description:
+      "Гости гостиницы могут дополнить проживание отдыхом в сауне. Это удобный формат для расслабления после поездки, рабочих встреч или долгого дня в городе.",
+    tags: ["Отдых", "После дороги", "По запросу"],
+  },
 ];
 
 export default function ServicesPage() {
@@ -69,7 +82,7 @@ export default function ServicesPage() {
           <h1 className="page-hero-title">Услуги гостиницы «Уют»</h1>
           <p className="page-hero-desc">
             Собрал страницу услуг на основе исходного сайта: парковка,
-            конференц-зал, бесплатный трансфер и прачечная для гостей.
+            конференц-зал, бесплатный трансфер, прачечная и сауна для гостей.
           </p>
           <div className={styles.facts}>
             {SERVICE_FACTS.map((fact) => (
@@ -86,7 +99,9 @@ export default function ServicesPage() {
         <div className={`page-container ${styles.intro}`}>
           <div>
             <div className="section-label">Что доступно гостям</div>
-            <h2 className="section-title">Сервис, который решает бытовые и деловые задачи</h2>
+            <h2 className="section-title">
+              Сервис, который решает бытовые и деловые задачи
+            </h2>
             <div className="gold-line" />
             <p className="section-desc">
               На старом сайте блок услуг был коротким, поэтому я сохранил его
@@ -98,7 +113,7 @@ export default function ServicesPage() {
             <span>Для проживания и поездок</span>
             <p>
               Здесь собраны именно дополнительные услуги отеля, которые помогают
-              с дорогой, машиной, встречами и бытовыми вопросами во время
+              с дорогой, машиной, встречами, отдыхом и бытовыми вопросами во время
               проживания.
             </p>
           </div>
@@ -174,9 +189,9 @@ export default function ServicesPage() {
             </h2>
           </div>
           <div className={styles.actions}>
-            <Link className="hero-btn about-page-secondary-btn" href="/contact/">
+            <OpenCallbackButton className="hero-btn about-page-secondary-btn">
               Написать или позвонить
-            </Link>
+            </OpenCallbackButton>
             <Link className="hero-btn" href="/prices_and_rooms/">
               Посмотреть номера
             </Link>

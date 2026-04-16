@@ -1,7 +1,10 @@
+import { ROOM_WIDGET_NAMES } from "./roomWidgetNames";
+
 export const ROOMS = [
   {
     id: 1,
     name: "Одноместный",
+    widgetRoomName: ROOM_WIDGET_NAMES.single,
     desc: "Уютный номер с полутораспальной кроватью, идеальный для деловых поездок.",
     price: "от 2 000 ₽",
     features: ["22 м²", "Wi-Fi", "Завтрак"],
@@ -13,6 +16,7 @@ export const ROOMS = [
   {
     id: 2,
     name: "Комфорт",
+    widgetRoomName: ROOM_WIDGET_NAMES.comfort,
     desc: "Двухместный номер класса комфорт с двумя раздельными кроватями и мягкой зоной.",
     price: "от 2 800 ₽",
     features: ["28 м²", "Wi-Fi", "Завтрак", "Мини-бар"],
@@ -24,6 +28,7 @@ export const ROOMS = [
   {
     id: 3,
     name: "Бизнес",
+    widgetRoomName: ROOM_WIDGET_NAMES.business,
     desc: "Просторный двухместный номер бизнес класса с рабочей зоной.",
     price: "от 3 200 ₽",
     features: ["32 м²", "Wi-Fi", "Завтрак", "Рабочий стол"],
@@ -35,6 +40,7 @@ export const ROOMS = [
   {
     id: 4,
     name: "Полулюкс",
+    widgetRoomName: ROOM_WIDGET_NAMES.halfluxe,
     desc: "Элегантный номер с большой двуспальной кроватью, халатами и тапочками.",
     price: "от 3 200 ₽",
     features: ["35 м²", "Wi-Fi", "Завтрак", "Халат"],
@@ -46,6 +52,7 @@ export const ROOMS = [
   {
     id: 5,
     name: "Джуниор Сьют",
+    widgetRoomName: ROOM_WIDGET_NAMES.junior,
     desc: "Номер с большой кроватью, диваном и дополнительным местом размещения.",
     price: "от 3 500 ₽",
     features: ["40 м²", "Wi-Fi", "Завтрак", "Диван"],
@@ -57,6 +64,7 @@ export const ROOMS = [
   {
     id: 6,
     name: "Люкс",
+    widgetRoomName: ROOM_WIDGET_NAMES.luxe,
     desc: "Двухкомнатный номер с гостиной, спальней, двумя ТВ. Максимум комфорта.",
     price: "от 3 500 ₽",
     features: ["48 м²", "Wi-Fi", "Завтрак", "2 комнаты"],
@@ -91,7 +99,10 @@ export const OFFERS = [
 ];
 
 export const ADVANTAGES = [
-  { num: "01", text: "Гарантия лучшей цены — скидка 10% при бронировании на сайте" },
+  {
+    num: "01",
+    text: "Гарантия лучшей цены — скидка 10% при бронировании на сайте",
+  },
   { num: "02", text: "Бронирование без кредитной карты" },
   {
     num: "03",
@@ -135,6 +146,7 @@ export const ABOUT_FEATURES = [
   "Бесплатная парковка",
   "Ресторан в отеле",
   "Конференц-зал",
+  "Сауна",
 ];
 
 export const PAYMENT_METHODS = [

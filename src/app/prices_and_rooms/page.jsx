@@ -1,5 +1,6 @@
 import RoomsPageContentClient from "../../components/RoomsPageContentClient";
 import SiteShell from "../../components/SiteShell";
+import { ROOM_WIDGET_NAMES } from "../../data/roomWidgetNames";
 import { getPageMetadata } from "../../lib/metadata";
 import styles from "../../components/RoomsPage.module.css";
 
@@ -12,9 +13,10 @@ const ROOM_COLLECTION = [
   {
     id: "single",
     name: "Одноместный",
+    widgetRoomName: ROOM_WIDGET_NAMES.single,
     subtitle: "Для одной персоны",
-    image:
-      "https://uyut-centr.ru/wp-content/uploads/2021/06/одноместный-5-scaled.jpg",
+    image: "/images/rooms/single/01.jpg",
+    gallery: ["/images/rooms/single/01.jpg", "/images/rooms/single/02.jpg"],
     summary:
       "Компактный и спокойный номер для деловой поездки или короткого отдыха.",
     description:
@@ -34,9 +36,14 @@ const ROOM_COLLECTION = [
   {
     id: "comfort",
     name: "Двухместный комфорт",
+    widgetRoomName: ROOM_WIDGET_NAMES.comfort,
     subtitle: "Класс комфорт",
-    image:
-      "https://uyut-centr.ru/wp-content/uploads/2021/06/Двухместный-комфорт-7-scaled.jpg",
+    image: "/images/rooms/comfort/01.jpg",
+    gallery: [
+      "/images/rooms/comfort/01.jpg",
+      "/images/rooms/comfort/02.jpg",
+      "/images/rooms/comfort/03.jpg",
+    ],
     summary:
       "Удобный номер с двумя раздельными кроватями для пары гостей или коллег.",
     description:
@@ -56,9 +63,15 @@ const ROOM_COLLECTION = [
   {
     id: "business",
     name: "Двухместный бизнес",
+    widgetRoomName: ROOM_WIDGET_NAMES.business,
     subtitle: "Бизнес-класс",
-    image:
-      "https://uyut-centr.ru/wp-content/uploads/2021/06/Двухместный-бизнес-10-scaled.jpg",
+    image: "/images/rooms/business/01.jpg",
+    gallery: [
+      "/images/rooms/business/01.jpg",
+      "/images/rooms/business/02.jpg",
+      "/images/rooms/business/03.jpg",
+      "/images/rooms/business/04.jpg",
+    ],
     summary:
       "Более просторный формат для тех, кому нужен комфорт и рабочий ритм.",
     description:
@@ -78,11 +91,16 @@ const ROOM_COLLECTION = [
   {
     id: "luxe",
     name: "Люкс",
+    widgetRoomName: ROOM_WIDGET_NAMES.luxe,
     subtitle: "Двухкомнатный номер",
-    image:
-      "https://uyut-centr.ru/wp-content/uploads/2021/06/Люкс-10-scaled.jpg",
-    summary:
-      "Самый комфортный вариант с отдельной гостиной и спальней.",
+    image: "/images/rooms/luxe/01.jpg",
+    gallery: [
+      "/images/rooms/luxe/01.jpg",
+      "/images/rooms/luxe/02.jpg",
+      "/images/rooms/luxe/03.jpg",
+      "/images/rooms/luxe/04.jpg",
+    ],
+    summary: "Самый комфортный вариант с отдельной гостиной и спальней.",
     description:
       "Комфортабельный двухкомнатный номер с гостиной и спальней. Внутри двуспальная кровать 180×200, ковровое покрытие, современная мебель, шкаф для одежды, два телевизора и холодильник.",
     details:
@@ -100,9 +118,14 @@ const ROOM_COLLECTION = [
   {
     id: "junior",
     name: "Джуниор Сьют",
+    widgetRoomName: ROOM_WIDGET_NAMES.junior,
     subtitle: "Дополнительное место",
-    image:
-      "https://uyut-centr.ru/wp-content/uploads/2021/06/Семейный-4-scaled.jpg",
+    image: "/images/rooms/junior-suite/01.jpg",
+    gallery: [
+      "/images/rooms/junior-suite/01.jpg",
+      "/images/rooms/junior-suite/02.jpg",
+      "/images/rooms/junior-suite/03.jpg",
+    ],
     summary:
       "Однокомнатный номер для пары гостей с возможностью дополнительного размещения.",
     description:
@@ -122,11 +145,15 @@ const ROOM_COLLECTION = [
   {
     id: "triple",
     name: "Трёхместный",
+    widgetRoomName: ROOM_WIDGET_NAMES.triple,
     subtitle: "Для двух или трёх гостей",
-    image:
-      "https://uyut-centr.ru/wp-content/uploads/2021/06/трехместный-4-scaled.jpg",
-    summary:
-      "Практичный вариант для небольшой компании или семейной поездки.",
+    image: "/images/rooms/triple/01.jpg",
+    gallery: [
+      "/images/rooms/triple/01.jpg",
+      "/images/rooms/triple/02.jpg",
+      "/images/rooms/triple/03.jpg",
+    ],
+    summary: "Практичный вариант для небольшой компании или семейной поездки.",
     description:
       "Уютный трёхместный номер подходит тем, кто путешествует вдвоём или втроём. В номере три раздельные кровати 90×200, ковровое покрытие, современная мебель, шкаф, телевизор, холодильник, набор для чая и кофе и бесплатный Wi‑Fi.",
     details:
@@ -144,9 +171,13 @@ const ROOM_COLLECTION = [
   {
     id: "halfluxe",
     name: "Полулюкс",
+    widgetRoomName: ROOM_WIDGET_NAMES.halfluxe,
     subtitle: "Повышенный комфорт",
-    image:
-      "https://uyut-centr.ru/wp-content/uploads/2021/06/Полулюкс-8-scaled.jpg",
+    image: "/images/rooms/half-luxe/01.jpg",
+    gallery: [
+      "/images/rooms/half-luxe/01.jpg",
+      "/images/rooms/half-luxe/02.jpg",
+    ],
     summary:
       "Однокомнатный номер с большой двуспальной кроватью и расширенным набором удобств.",
     description:
@@ -177,11 +208,13 @@ export default function RoomsPage() {
       <section className={`page-hero ${styles.hero}`}>
         <div className={`page-hero-bg ${styles.heroBg}`} />
         <div className="page-hero-content page-container">
-          <div className="hero-stars page-eyebrow">Размещение в центре Клинцов</div>
+          <div className="hero-stars page-eyebrow">
+            Размещение в центре Клинцов
+          </div>
           <h1 className="page-hero-title">Снять номер в гостинице «Уют»</h1>
           <p className="page-hero-desc">
-            Подобрали страницу под реальный номерной фонд из старого сайта:
-            от одноместных вариантов до люкса и семейного формата.
+            Подобрали страницу под реальный номерной фонд из старого сайта: от
+            одноместных вариантов до люкса и семейного формата.
           </p>
           <div className={styles.facts}>
             {QUICK_FACTS.map((fact) => (

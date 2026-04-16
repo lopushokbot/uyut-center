@@ -4,8 +4,16 @@
 
 .heroBg {
   background:
-    radial-gradient(circle at 18% 18%, rgba(184,150,62,.22), transparent 28%),
-    radial-gradient(circle at 84% 24%, rgba(255,255,255,.07), transparent 20%),
+    radial-gradient(
+      circle at 18% 18%,
+      rgba(184, 150, 62, 0.22),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 84% 24%,
+      rgba(255, 255, 255, 0.07),
+      transparent 20%
+    ),
     linear-gradient(135deg, #090909 0%, #18120d 42%, #2c1c16 72%, #120d0b 100%);
 }
 
@@ -18,8 +26,8 @@
 
 .fact {
   padding: 22px 24px;
-  background: rgba(255,255,255,.05);
-  border: 1px solid rgba(255,255,255,.1);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .fact strong {
@@ -31,8 +39,8 @@
 }
 
 .fact span {
-  color: rgba(255,255,255,.64);
-  font-size: .78rem;
+  color: rgba(255, 255, 255, 0.64);
+  font-size: 0.78rem;
   letter-spacing: 1.4px;
   text-transform: uppercase;
   line-height: 1.6;
@@ -40,7 +48,7 @@
 
 .intro {
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(280px, .9fr);
+  grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
   gap: 28px;
   align-items: center;
 }
@@ -48,16 +56,20 @@
 .note {
   padding: 30px 32px;
   background:
-    radial-gradient(circle at top left, rgba(184,150,62,.12), transparent 42%),
+    radial-gradient(
+      circle at top left,
+      rgba(184, 150, 62, 0.12),
+      transparent 42%
+    ),
     #efe7db;
-  border: 1px solid rgba(184,150,62,.14);
+  border: 1px solid rgba(184, 150, 62, 0.14);
 }
 
 .note span {
   display: inline-block;
   margin-bottom: 12px;
   color: var(--gold);
-  font-size: .74rem;
+  font-size: 0.74rem;
   letter-spacing: 1.6px;
   text-transform: uppercase;
   font-weight: 700;
@@ -66,7 +78,7 @@
 .note p {
   color: var(--text);
   line-height: 1.8;
-  font-size: .94rem;
+  font-size: 0.94rem;
 }
 
 .header :global(.section-title) {
@@ -80,15 +92,15 @@
 
 .detail {
   display: grid;
-  grid-template-columns: minmax(280px, .9fr) minmax(0, 1.1fr);
+  grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1.1fr);
   gap: 0;
-  background: rgba(255,255,255,.03);
-  border: 1px solid rgba(255,255,255,.08);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   overflow: hidden;
 }
 
 .isReversed {
-  grid-template-columns: minmax(0, 1.1fr) minmax(280px, .9fr);
+  grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
 }
 
 .isReversed .detailVisual {
@@ -125,7 +137,7 @@
 
 .detailTopline span,
 .detailTopline strong {
-  font-size: .74rem;
+  font-size: 0.74rem;
   text-transform: uppercase;
   letter-spacing: 1.6px;
 }
@@ -146,9 +158,10 @@
 }
 
 .detailText {
-  color: rgba(255,255,255,.68);
-  font-size: .95rem;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 0.95rem;
   line-height: 1.85;
+  text-align: justify;
 }
 
 .detailTags {
@@ -160,18 +173,26 @@
 
 .detailTag {
   padding: 7px 12px;
-  background: rgba(255,255,255,.05);
-  border: 1px solid rgba(255,255,255,.08);
-  color: rgba(255,255,255,.82);
-  font-size: .76rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.76rem;
   letter-spacing: 1px;
   text-transform: uppercase;
 }
 
 .actions {
   display: flex;
+  flex-direction: column;
+  align-items: stretch;
   gap: 14px;
-  flex-wrap: wrap;
+  width: min(320px, 100%);
+}
+
+.actions :global(.hero-btn) {
+  width: 100%;
+  justify-content: center;
+  text-align: center;
 }
 
 @media (max-width: 960px) {

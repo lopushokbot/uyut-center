@@ -7,8 +7,8 @@ export const metadata = getPageMetadata("contacts");
 
 const CONTACT_FACTS = [
   { value: "24/7", label: "стойка регистрации" },
-  { value: "1", label: "адрес в центре Клинцов" },
-  { value: "Fast", label: "связь по телефону и email" },
+  { value: "Расположение", label: "адрес в центре Клинцов" },
+  { value: "Быстрая", label: "связь по телефону и email" },
 ];
 
 const CONTACT_ITEMS = [

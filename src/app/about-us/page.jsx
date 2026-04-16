@@ -1,5 +1,6 @@
 import Link from "next/link";
 import BookingCta from "../../components/BookingCta";
+import OpenCallbackButton from "../../components/OpenCallbackButton";
 import SiteShell from "../../components/SiteShell";
 import { getPageMetadata } from "../../lib/metadata";
 import styles from "./page.module.css";
@@ -25,6 +26,7 @@ const ABOUT_FEATURES = [
   "Индивидуальный подход к каждому гостю",
   "Классические номера в тёплой палитре",
   "Услуги для отдыха и деловых поездок",
+  "Парная для глубокого восстановления",
 ];
 
 const ABOUT_OFFERS = [
@@ -57,7 +59,7 @@ const ABOUT_OFFERS = [
 
 const ABOUT_GALLERY = [
   {
-    src: "https://uyut-centr.ru/wp-content/uploads/elementor/thumbs/Здание-гостиницы-scaled-pg8ept6syd3d12fsk2jpnyq3e8j50ekax7zkzn0xe8.jpg",
+    src: "/images/about/hotel-uyut.jpg",
     alt: "Здание гостиницы Уют",
     large: true,
   },
@@ -76,16 +78,20 @@ export default function AboutPage() {
     <SiteShell>
       <section className={`page-hero ${styles.hero}`}>
         <div className={`page-hero-bg ${styles.heroBg}`} />
-        <div className={`page-hero-content page-container ${styles.heroContent}`}>
-          <div className="hero-stars page-eyebrow">Тихий ритм центра города</div>
+        <div
+          className={`page-hero-content page-container ${styles.heroContent}`}
+        >
+          <div className="hero-stars page-eyebrow">
+            Тихий ритм центра города
+          </div>
           <div className={styles.kicker}>
             <span>г. Клинцы</span>
             <span>ул. К. Маркса, 1</span>
           </div>
           <h1 className="page-hero-title">Об отеле «Уют»</h1>
           <p className="page-hero-desc">
-            Гостиница в центре Клинцов для спокойного отдыха, деловых поездок
-            и событий, где важны сервис, удобная локация и понятный комфорт.
+            Гостиница в центре Клинцов для спокойного отдыха, деловых поездок и
+            событий, где важны сервис, удобная локация и понятный комфорт.
           </p>
           <div className={styles.stats}>
             {ABOUT_STATS.map((item) => (
@@ -140,10 +146,12 @@ export default function AboutPage() {
         <div className="page-container">
           <div className={`offers-header ${styles.offersHeader}`}>
             <div className="section-label">Специальные предложения</div>
-            <h2 className="section-title">Условия, которые делают проживание удобнее</h2>
+            <h2 className="section-title">
+              Условия, которые делают проживание удобнее
+            </h2>
             <p className="section-desc">
-              Наполнили блок предложениями из исходной страницы отеля и
-              оформили их в более современном формате карточек.
+              Наполнили блок предложениями из исходной страницы отеля и оформили
+              их в более современном формате карточек.
             </p>
           </div>
 
@@ -191,9 +199,9 @@ export default function AboutPage() {
               <strong>Центральная площадь, вокзал, ресторан, парковка</strong>
             </div>
             <div className={styles.locationActions}>
-              <Link className="hero-btn about-page-secondary-btn" href="/contact/">
+              <OpenCallbackButton className="hero-btn about-page-secondary-btn">
                 Контакты
-              </Link>
+              </OpenCallbackButton>
               <Link className="hero-btn" href="/prices_and_rooms/">
                 Выбрать номер
               </Link>

@@ -87,6 +87,7 @@ export default function HomePageClient() {
         isOpen={bookingOpen}
         onClose={() => setBookingOpen(false)}
         selectedRoomName={bookingRoom?.name}
+        selectedWidgetRoomName={bookingRoom?.widgetRoomName}
       />
     </SiteShell>
   );

@@ -7,6 +7,7 @@ export default function BookingModal({
   isOpen,
   onClose,
   selectedRoomName,
+  selectedWidgetRoomName,
 }) {
   useEffect(() => {
     if (!isOpen) {
@@ -41,7 +42,11 @@ export default function BookingModal({
         <button className="modal-close" onClick={onClose} type="button">
           ✕
         </button>
-        <BookingStrip mode="modal" selectedRoomName={selectedRoomName} />
+        <BookingStrip
+          mode="modal"
+          selectedRoomName={selectedRoomName}
+          selectedWidgetRoomName={selectedWidgetRoomName}
+        />
       </div>
     </div>
   );

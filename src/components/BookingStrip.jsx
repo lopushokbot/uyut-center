@@ -4,9 +4,24 @@ import { useEffect, useId } from "react";
 
 const WIDGET_SCRIPT_SRC = "https://bookonline24.ru/widget.js";
 const HOTEL_ID = "07c2c0c9-cfa1-4695-922f-3561eb94b637";
+const WIDGET_ROOMS_LIST_SELECTOR = 'div[id^="roomsList_"]';
+const WIDGET_ROOM_TITLE_SELECTOR = ".FJbBVA";
+const WIDGET_ROOM_ACTION_SELECTOR = 'button[data-tid="Button__rootElement"]';
+const WIDGET_SCROLL_CONTAINER_SELECTOR = ".booking-widget-rooms";
+const ROOM_HIGHLIGHT_CLASS = "booking-widget-room-match";
+const ROOM_SELECTION_TIMEOUT_MS = 10000;
+const ROOM_SELECTION_RETRY_MS = 250;
 
 let widgetScriptPromise;
 let widgetInitialized = false;
+
+function normalizeRoomName(value = "") {
+  return value
+    .replace(/[«»]/g, '"')
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+}
 
 function loadWidgetScript() {
   if (typeof window === "undefined") {
@@ -43,71 +58,197 @@ function loadWidgetScript() {
   return widgetScriptPromise;
 }
 
+function findRoomCardElement(titleElement, roomsListElement) {
+  let currentElement = titleElement;
+
+  while (currentElement && currentElement !== roomsListElement) {
+    // The first ancestor with the action button is the most stable card wrapper we can use.
+    if (currentElement.querySelector?.(WIDGET_ROOM_ACTION_SELECTOR)) {
+      return currentElement;
+    }
+
+    currentElement = currentElement.parentElement;
+  }
+
+  return titleElement.parentElement;
+}
+
+function findRoomCardByName(roomsListElement, selectedRoomName) {
+  const targetRoomName = normalizeRoomName(selectedRoomName);
+
+  if (!targetRoomName) {
+    return null;
+  }
+
+  const roomTitles = Array.from(
+    roomsListElement.querySelectorAll(WIDGET_ROOM_TITLE_SELECTOR),
+  );
+
+  for (const roomTitle of roomTitles) {
+    if (normalizeRoomName(roomTitle.textContent) !== targetRoomName) {
+      continue;
+    }
+
+    const roomCard = findRoomCardElement(roomTitle, roomsListElement);
+
+    if (roomCard) {
+      return {
+        roomCard,
+        roomTitle,
+      };
+    }
+  }
+
+  return null;
+}
+
+function scrollRoomCardIntoView(scrollContainer, roomCard) {
+  const containerRect = scrollContainer.getBoundingClientRect();
+  const cardRect = roomCard.getBoundingClientRect();
+  const targetTop =
+    scrollContainer.scrollTop + cardRect.top - containerRect.top - 16;
+
+  scrollContainer.scrollTo({
+    top: Math.max(targetTop, 0),
+    behavior: "smooth",
+  });
+}
+
+function highlightRoomCard(roomCard) {
+  roomCard.classList.add(ROOM_HIGHLIGHT_CLASS);
+
+  window.setTimeout(() => {
+    roomCard.classList.remove(ROOM_HIGHLIGHT_CLASS);
+  }, 2400);
+}
+
+function clickAvailabilityButton(roomCard) {
+  const actionButton = roomCard.querySelector(WIDGET_ROOM_ACTION_SELECTOR);
+  const buttonText = normalizeRoomName(actionButton?.textContent);
+
+  if (
+    !actionButton ||
+    actionButton.disabled ||
+    !buttonText.includes(normalizeRoomName("Проверить наличие"))
+  ) {
+    return false;
+  }
+
+  window.setTimeout(() => {
+    actionButton.click();
+  }, 260);
+
+  return true;
+}
+
+function syncSelectedRoomInWidget(containerId, selectedRoomName) {
+  if (!selectedRoomName || typeof window === "undefined") {
+    return () => {};
+  }
+
+  const hostContainer = document.getElementById(containerId);
+
+  if (!hostContainer) {
+    return () => {};
+  }
+
+  let stopped = false;
+  let syncCompleted = false;
+  let timeoutId = null;
+  let retryId = null;
+  let observer = null;
+
+  const trySyncRoom = () => {
+    if (stopped || syncCompleted) {
+      return false;
+    }
+
+    const roomsListElement =
+      hostContainer.matches(WIDGET_ROOMS_LIST_SELECTOR)
+        ? hostContainer
+        : hostContainer.querySelector(WIDGET_ROOMS_LIST_SELECTOR);
+    const scrollContainer =
+      hostContainer.closest(WIDGET_SCROLL_CONTAINER_SELECTOR) ||
+      document.querySelector(WIDGET_SCROLL_CONTAINER_SELECTOR);
+
+    if (!roomsListElement || !scrollContainer) {
+      return false;
+    }
+
+    // The widget renders asynchronously, so we keep retrying until the target card appears.
+    const roomMatch = findRoomCardByName(roomsListElement, selectedRoomName);
+
+    if (!roomMatch) {
+      return false;
+    }
+
+    scrollRoomCardIntoView(scrollContainer, roomMatch.roomCard);
+    highlightRoomCard(roomMatch.roomCard);
+    clickAvailabilityButton(roomMatch.roomCard);
+
+    syncCompleted = true;
+    observer?.disconnect();
+
+    if (retryId) {
+      window.clearInterval(retryId);
+    }
+
+    if (timeoutId) {
+      window.clearTimeout(timeoutId);
+    }
+
+    return true;
+  };
+
+  timeoutId = window.setTimeout(() => {
+    stopped = true;
+    observer?.disconnect();
+
+    if (retryId) {
+      window.clearInterval(retryId);
+    }
+  }, ROOM_SELECTION_TIMEOUT_MS);
+
+  retryId = window.setInterval(trySyncRoom, ROOM_SELECTION_RETRY_MS);
+
+  observer = new MutationObserver(() => {
+    trySyncRoom();
+  });
+
+  observer.observe(hostContainer, {
+    childList: true,
+    subtree: true,
+  });
+
+  trySyncRoom();
+
+  return () => {
+    stopped = true;
+    observer?.disconnect();
+
+    if (retryId) {
+      window.clearInterval(retryId);
+    }
+
+    if (timeoutId) {
+      window.clearTimeout(timeoutId);
+    }
+  };
+}
+
 function trySelectRoom(containerId, selectedRoomName) {
   if (!selectedRoomName || typeof window === "undefined") {
     return;
   }
 
-  const container = document.getElementById(containerId);
-
-  if (!container) {
-    return;
-  }
-
-  const normalize = (value) =>
-    value
-      .replace(/\s+/g, " ")
-      .trim()
-      .toLowerCase();
-
-  const targetRoomName = normalize(selectedRoomName);
-  const clickableSelectors = [
-    "button",
-    "a",
-    "[role='button']",
-    "[data-room-id]",
-    "[data-testid]",
-  ].join(", ");
-
-  const findAndClickRoom = () => {
-    const clickableElements = Array.from(
-      container.querySelectorAll(clickableSelectors),
-    );
-
-    const directAction = clickableElements.find((element) =>
-      normalize(element.textContent || "").includes(targetRoomName),
-    );
-
-    if (directAction) {
-      directAction.click();
-      return true;
-    }
-
-    const matchingBlock = Array.from(container.querySelectorAll("*")).find(
-      (element) => normalize(element.textContent || "").includes(targetRoomName),
-    );
-
-    const nestedAction = matchingBlock?.querySelector(clickableSelectors);
-
-    if (nestedAction) {
-      nestedAction.click();
-      return true;
-    }
-
-    return false;
-  };
-
-  if (findAndClickRoom()) {
-    return;
-  }
-
-  window.setTimeout(findAndClickRoom, 700);
+  return syncSelectedRoomInWidget(containerId, selectedRoomName);
 }
 
 export default function BookingStrip({
   className = "",
   mode = "inline",
   selectedRoomName,
+  selectedWidgetRoomName,
 }) {
   const widgetId = useId().replace(/[^a-zA-Z0-9_-]/g, "");
   const bookingFormId = `booking-form-${widgetId}`;
@@ -118,6 +259,7 @@ export default function BookingStrip({
   useEffect(() => {
     let cancelled = false;
     let widgetIds = [];
+    let cleanupRoomSelection = () => {};
 
     loadWidgetScript()
       .then((HotelWidget) => {
@@ -181,7 +323,10 @@ export default function BookingStrip({
           });
           widgetIds.push(calendarWidget.id);
 
-          trySelectRoom(roomsListId, selectedRoomName);
+          cleanupRoomSelection = trySelectRoom(
+            roomsListId,
+            selectedWidgetRoomName || selectedRoomName,
+          );
         }
 
         const mobileButtonWidget = HotelWidget.add({
@@ -198,6 +343,7 @@ export default function BookingStrip({
 
     return () => {
       cancelled = true;
+      cleanupRoomSelection();
 
       if (typeof window !== "undefined" && window.HotelWidget) {
         widgetIds.forEach((widgetId) => {
@@ -216,6 +362,7 @@ export default function BookingStrip({
     mobileButtonId,
     mode,
     selectedRoomName,
+    selectedWidgetRoomName,
   ]);
 
   return (

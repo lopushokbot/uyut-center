@@ -1,4 +1,5 @@
 import Link from "next/link";
+import OpenCallbackButton from "../../components/OpenCallbackButton";
 import SiteShell from "../../components/SiteShell";
 import { getPageMetadata } from "../../lib/metadata";
 import styles from "./page.module.css";
@@ -8,7 +9,7 @@ export const metadata = getPageMetadata("offers");
 const OFFER_FACTS = [
   { value: "5", label: "акций и спецпредложений" },
   { value: "−30%", label: "скидка именинникам" },
-  { value: "Free", label: "люкс или трансфер в подарок" },
+  { value: "Бесплатно", label: "люкс или трансфер в подарок" },
 ];
 
 const OFFER_ITEMS = [
@@ -165,9 +166,9 @@ export default function OffersPage() {
             >
               Смотреть номера
             </Link>
-            <Link className="hero-btn" href="/contact/">
+            <OpenCallbackButton className="hero-btn">
               Связаться с отелем
-            </Link>
+            </OpenCallbackButton>
           </div>
         </div>
       </section>

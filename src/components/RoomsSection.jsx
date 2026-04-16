@@ -22,7 +22,9 @@ export default function RoomsSection({
           <div className="room-card" key={room.id}>
             <div
               className="room-card-img"
-              style={roomImgErrors[room.id] ? { background: room.gradient } : {}}
+              style={
+                roomImgErrors[room.id] ? { background: room.gradient } : {}
+              }
             >
               {roomImgErrors[room.id] ? (
                 <div className="room-card-placeholder">
@@ -53,6 +55,7 @@ export default function RoomsSection({
               </div>
               <button
                 className="room-card-book-btn"
+                data-room-name={room.widgetRoomName}
                 onClick={() => onBookRoom?.(room)}
                 type="button"
               >

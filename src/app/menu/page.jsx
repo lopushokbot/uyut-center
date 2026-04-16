@@ -1,5 +1,6 @@
 import Link from "next/link";
 import SiteShell from "../../components/SiteShell";
+import OpenCallbackButton from "../../components/OpenCallbackButton";
 import { RESTAURANT_MENU_URL } from "../../data/hotelData";
 import { getPageMetadata } from "../../lib/metadata";
 import styles from "./page.module.css";
@@ -8,7 +9,7 @@ export const metadata = getPageMetadata("restaurant");
 
 const RESTAURANT_FACTS = [
   { value: "10%", label: "скидка для гостей" },
-  { value: "Room", label: "обслуживание в номер" },
+  { value: "Рум сервис", label: "обслуживание в номер" },
   { value: "Меню", label: "разнообразный выбор блюд" },
 ];
 
@@ -62,12 +63,15 @@ export default function MenuPage() {
         <div className={`page-container ${styles.intro}`}>
           <div>
             <div className="section-label">Ресторан</div>
-            <h2 className="section-title">Ужин, завтрак и спокойная пауза без выхода из отеля</h2>
+            <h2 className="section-title">
+              Ужин, завтрак и спокойная пауза без выхода из отеля
+            </h2>
             <div className="gold-line" />
             <p className="section-desc">
-              В исходном HTML ресторан был описан коротко, но по делу: «Метрополь»,
-              скидка для гостей, обслуживание в номер и разнообразное меню. Я
-              сохранил эти акценты и оформил их в полноценную страницу.
+              В исходном HTML ресторан был описан коротко, но по делу:
+              «Метрополь», скидка для гостей, обслуживание в номер и
+              разнообразное меню. Я сохранил эти акценты и оформил их в
+              полноценную страницу.
             </p>
             <div className={styles.actions}>
               <a
@@ -78,9 +82,9 @@ export default function MenuPage() {
               >
                 Открыть меню
               </a>
-              <Link className="hero-btn about-page-secondary-btn" href="/contact/">
+              <OpenCallbackButton className="hero-btn about-page-secondary-btn">
                 Уточнить детали
-              </Link>
+              </OpenCallbackButton>
             </div>
           </div>
 
@@ -89,9 +93,7 @@ export default function MenuPage() {
               src="https://uyut-centr.ru/wp-content/uploads/2021/05/274659011.jpg"
               alt="Ресторан Метрополь"
             />
-            <div className={styles.visualBadge}>
-              Ресторан при гостинице
-            </div>
+            <div className={styles.visualBadge}>Ресторан при гостинице</div>
           </div>
         </div>
       </section>
@@ -114,7 +116,9 @@ export default function MenuPage() {
         <div className={`page-container ${styles.highlight}`}>
           <div className={styles.highlightCopy}>
             <div className="section-label">Метрополь</div>
-            <h2 className="section-title">Комфортный ресторанный формат внутри поездки</h2>
+            <h2 className="section-title">
+              Комфортный ресторанный формат внутри поездки
+            </h2>
             <p className="section-desc">
               Ресторан помогает не искать отдельное место для ужина или встречи:
               можно начать день с завтрака, поужинать вечером или заказать часть
@@ -124,15 +128,22 @@ export default function MenuPage() {
           <div className={styles.highlightList}>
             <div className={styles.highlightItem}>
               <span>01</span>
-              <p>Подходит для гостей отеля, деловых встреч и спокойных ужинов.</p>
+              <p>
+                Подходит для гостей отеля, деловых встреч и спокойных ужинов.
+              </p>
             </div>
             <div className={styles.highlightItem}>
               <span>02</span>
-              <p>Скидка 10% делает посещение ресторана частью гостевого сервиса.</p>
+              <p>
+                Скидка 10% делает посещение ресторана частью гостевого сервиса.
+              </p>
             </div>
             <div className={styles.highlightItem}>
               <span>03</span>
-              <p>Внешнее меню доступно отдельно, поэтому страница ведёт прямо к выбору блюд.</p>
+              <p>
+                Внешнее меню доступно отдельно, поэтому страница ведёт прямо к
+                выбору блюд.
+              </p>
             </div>
           </div>
         </div>
@@ -142,7 +153,9 @@ export default function MenuPage() {
         <div className="page-container cta-banner">
           <div>
             <div className="section-label">Меню и бронирование</div>
-            <h2 className="section-title">Перейти к меню или выбрать номер с рестораном под рукой</h2>
+            <h2 className="section-title">
+              Перейти к меню или выбрать номер с рестораном под рукой
+            </h2>
           </div>
           <div className={styles.actions}>
             <a
@@ -153,7 +166,10 @@ export default function MenuPage() {
             >
               Смотреть меню
             </a>
-            <Link className="hero-btn about-page-secondary-btn" href="/prices_and_rooms/">
+            <Link
+              className="hero-btn about-page-secondary-btn"
+              href="/prices_and_rooms/"
+            >
               Смотреть номера
             </Link>
           </div>
