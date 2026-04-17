@@ -1,10 +1,17 @@
 import RoomsPageContentClient from "../../components/RoomsPageContentClient";
 import SiteShell from "../../components/SiteShell";
+import JsonLd from "../../components/JsonLd";
 import { ROOM_COLLECTION } from "../../data/rooms";
 import { getPageMetadata } from "../../lib/metadata";
+import { breadcrumbSchema, roomOffersSchema } from "../../lib/schema";
 import styles from "../../components/RoomsPage.module.css";
 
 export const metadata = getPageMetadata("rooms");
+
+const BREADCRUMBS = [
+  { name: "Главная", path: "/" },
+  { name: "Номера", path: "/prices_and_rooms/" },
+];
 
 const BREAKFAST_NOTE =
   "В стоимость проживания включён завтрак по системе «Шведский стол»: с 7:00 до 10:00 по будням и с 8:00 до 11:00 по выходным в ресторане «Метрополь».";
@@ -18,6 +25,9 @@ const QUICK_FACTS = [
 export default function RoomsPage() {
   return (
     <SiteShell>
+      <JsonLd
+        data={[breadcrumbSchema(BREADCRUMBS), ...roomOffersSchema()]}
+      />
       <section className={`page-hero ${styles.hero}`}>
         <div className={`page-hero-bg ${styles.heroBg}`} />
         <div className="page-hero-content page-container">

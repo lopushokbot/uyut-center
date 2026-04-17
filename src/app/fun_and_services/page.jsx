@@ -1,9 +1,16 @@
 import Link from "next/link";
 import SiteShell from "../../components/SiteShell";
 import OpenCallbackButton from "../../components/OpenCallbackButton";
+import JsonLd from "../../components/JsonLd";
 import { PAGE_INTRO } from "../../data/siteData";
 import { getPageMetadata } from "../../lib/metadata";
+import { HOTEL_FAQ, breadcrumbSchema, faqSchema } from "../../lib/schema";
 import styles from "./page.module.css";
+
+const BREADCRUMBS = [
+  { name: "Главная", path: "/" },
+  { name: "Услуги", path: "/fun_and_services/" },
+];
 
 export const metadata = getPageMetadata("services");
 
@@ -76,6 +83,7 @@ const SERVICE_ITEMS = [
 export default function ServicesPage() {
   return (
     <SiteShell>
+      <JsonLd data={[breadcrumbSchema(BREADCRUMBS), faqSchema(HOTEL_FAQ)]} />
       <section className={`page-hero ${styles.hero}`}>
         <div className={`page-hero-bg ${styles.heroBg}`} />
         <div className="page-hero-content page-container">
@@ -124,7 +132,11 @@ export default function ServicesPage() {
             {SERVICE_ITEMS.map((service) => (
               <article className={styles.card} key={service.id}>
                 <div className={styles.cardImage}>
-                  <img src={service.image} alt={service.name} />
+                  <img
+                    src={service.image}
+                    alt={`${service.name} в гостинице «Уют» — ${service.kicker}`}
+                    loading="lazy"
+                  />
                 </div>
                 <div className={styles.cardBody}>
                   <div className={styles.cardKicker}>{service.kicker}</div>
@@ -163,7 +175,11 @@ export default function ServicesPage() {
                 key={service.id}
               >
                 <div className={styles.detailVisual}>
-                  <img src={service.image} alt={service.name} />
+                  <img
+                    src={service.image}
+                    alt={`${service.name} в гостинице «Уют» — ${service.kicker}`}
+                    loading="lazy"
+                  />
                 </div>
                 <div className={styles.detailCopy}>
                   <div className={styles.detailKicker}>{service.kicker}</div>
@@ -198,6 +214,24 @@ export default function ServicesPage() {
             <Link className="hero-btn" href="/prices_and_rooms/">
               Посмотреть номера
             </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="section fade-section visible">
+        <div className={`page-container ${styles.faqSection}`}>
+          <div className={styles.faqHeader}>
+            <div className="section-label">Частые вопросы</div>
+            <h2 className="section-title">Что спрашивают перед заселением</h2>
+            <div className="gold-line" />
+          </div>
+          <div className={styles.faqList}>
+            {HOTEL_FAQ.map((item) => (
+              <details className={styles.faqItem} key={item.question}>
+                <summary className={styles.faqQuestion}>{item.question}</summary>
+                <p className={styles.faqAnswer}>{item.answer}</p>
+              </details>
+            ))}
           </div>
         </div>
       </section>

@@ -1,14 +1,22 @@
 import PageHero from "../../components/PageHero";
 import SiteShell from "../../components/SiteShell";
+import JsonLd from "../../components/JsonLd";
 import { REVIEWS } from "../../data/hotelData";
 import { getPageMetadata } from "../../lib/metadata";
+import { breadcrumbSchema } from "../../lib/schema";
 import styles from "./page.module.css";
 
 export const metadata = getPageMetadata("reviews");
 
+const BREADCRUMBS = [
+  { name: "Главная", path: "/" },
+  { name: "Отзывы", path: "/reviews/" },
+];
+
 export default function ReviewsPage() {
   return (
     <SiteShell>
+      <JsonLd data={breadcrumbSchema(BREADCRUMBS)} />
       <PageHero
         eyebrow="Отзывы гостей"
         title="Отзывы"

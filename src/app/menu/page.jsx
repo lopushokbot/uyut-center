@@ -2,10 +2,48 @@ import Link from "next/link";
 import SiteShell from "../../components/SiteShell";
 import OpenCallbackButton from "../../components/OpenCallbackButton";
 import SocialLinks from "../../components/SocialLinks";
+import JsonLd from "../../components/JsonLd";
 import { RESTAURANT_MENU_URL } from "../../data/hotelData";
-import { PAGE_INTRO, RESTAURANT_LINKS } from "../../data/siteData";
+import { PAGE_INTRO, RESTAURANT_LINKS, SITE_URL } from "../../data/siteData";
 import { getPageMetadata } from "../../lib/metadata";
+import { breadcrumbSchema } from "../../lib/schema";
 import styles from "./page.module.css";
+
+const BREADCRUMBS = [
+  { name: "Главная", path: "/" },
+  { name: "Ресторан", path: "/menu/" },
+];
+
+const RESTAURANT_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "Restaurant",
+  "@id": `${SITE_URL}/menu/#restaurant`,
+  name: "Ресторан «Метрополь»",
+  description:
+    "Ресторан при гостинице «Уют»: европейская и русская кухня, завтраки шведский стол, обслуживание в номер и скидка 10% для гостей отеля.",
+  url: `${SITE_URL}/menu/`,
+  telephone: "+7-930-722-48-88",
+  image: `${SITE_URL}/images/og-cover.jpg`,
+  priceRange: "₽₽",
+  servesCuisine: ["Европейская кухня", "Русская кухня"],
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "ул. К. Маркса, д. 1",
+    addressLocality: "Клинцы",
+    addressRegion: "Брянская область",
+    postalCode: "243140",
+    addressCountry: "RU",
+  },
+  geo: { "@type": "GeoCoordinates", latitude: 52.749840, longitude: 32.235271 },
+  acceptsReservations: true,
+  menu: RESTAURANT_MENU_URL,
+  hasMenu: RESTAURANT_MENU_URL,
+  sameAs: [RESTAURANT_LINKS.yandexBusiness.url, RESTAURANT_LINKS.vk.url, RESTAURANT_LINKS.telegram.url].filter(Boolean),
+  openingHoursSpecification: [
+    { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "07:00", closes: "23:00" },
+    { "@type": "OpeningHoursSpecification", dayOfWeek: ["Saturday", "Sunday"], opens: "08:00", closes: "23:00" },
+  ],
+};
 
 export const metadata = getPageMetadata("restaurant");
 
@@ -41,6 +79,7 @@ const RESTAURANT_FEATURES = [
 export default function MenuPage() {
   return (
     <SiteShell>
+      <JsonLd data={[breadcrumbSchema(BREADCRUMBS), RESTAURANT_SCHEMA]} />
       <section className={`page-hero ${styles.hero}`}>
         <div className={`page-hero-bg ${styles.heroBg}`} />
         <div className="page-hero-content page-container">
@@ -89,7 +128,8 @@ export default function MenuPage() {
           <div className={styles.visual}>
             <img
               src="https://uyut-centr.ru/wp-content/uploads/2021/05/274659011.jpg"
-              alt="Ресторан Метрополь"
+              alt="Зал ресторана «Метрополь» при гостинице «Уют» в центре Клинцов — европейская и русская кухня"
+              loading="lazy"
             />
             <div className={styles.visualBadge}>Ресторан при гостинице</div>
             {RESTAURANT_LINKS.yandexBusiness.url ? (

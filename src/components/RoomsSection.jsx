@@ -41,7 +41,7 @@ export default function RoomsSection({
                 ) : (
                   <img
                     src={room.image}
-                    alt={room.name}
+                    alt={`${room.name} — ${room.summary || "номер в гостинице «Уют» в центре Клинцов"}`}
                     loading="lazy"
                     onError={() => onRoomImgError?.(room.id)}
                   />

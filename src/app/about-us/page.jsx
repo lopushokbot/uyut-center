@@ -2,10 +2,17 @@ import Link from "next/link";
 import BookingCta from "../../components/BookingCta";
 import OpenCallbackButton from "../../components/OpenCallbackButton";
 import SiteShell from "../../components/SiteShell";
+import JsonLd from "../../components/JsonLd";
 import { getPageMetadata } from "../../lib/metadata";
+import { breadcrumbSchema } from "../../lib/schema";
 import styles from "./page.module.css";
 
 export const metadata = getPageMetadata("about");
+
+const BREADCRUMBS = [
+  { name: "Главная", path: "/" },
+  { name: "Об отеле", path: "/about-us/" },
+];
 
 const ABOUT_STORY = [
   `Трёхзвёздочная гостиница «Уют» расположена в центре города Клинцы, в 4 минутах ходьбы от Центральной площади. Наш гостиничный комплекс предлагает номера разных категорий и подходит гостям с разными запросами и бюджетом.`,
@@ -81,6 +88,7 @@ const ABOUT_GALLERY = [
 export default function AboutPage() {
   return (
     <SiteShell>
+      <JsonLd data={breadcrumbSchema(BREADCRUMBS)} />
       <section className={`page-hero ${styles.hero}`}>
         <div className={`page-hero-bg ${styles.heroBg}`} />
         <div
@@ -140,7 +148,7 @@ export default function AboutPage() {
                 }`.trim()}
                 key={image.src}
               >
-                <img src={image.src} alt={image.alt} />
+                <img src={image.src} alt={image.alt} loading="lazy" />
               </div>
             ))}
           </div>

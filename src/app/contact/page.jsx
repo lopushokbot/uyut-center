@@ -1,11 +1,18 @@
 import SiteShell from "../../components/SiteShell";
 import ContactForm from "../../components/ContactForm";
 import SocialLinks from "../../components/SocialLinks";
+import JsonLd from "../../components/JsonLd";
 import { SOCIAL_LINKS, PAGE_INTRO } from "../../data/siteData";
 import { getPageMetadata } from "../../lib/metadata";
+import { breadcrumbSchema } from "../../lib/schema";
 import styles from "./page.module.css";
 
 export const metadata = getPageMetadata("contacts");
+
+const BREADCRUMBS = [
+  { name: "Главная", path: "/" },
+  { name: "Контакты", path: "/contact/" },
+];
 
 const CONTACT_FACTS = [
   { value: "24/7", label: "стойка регистрации" },
@@ -39,6 +46,7 @@ const CONTACT_ITEMS = [
 export default function ContactPage() {
   return (
     <SiteShell>
+      <JsonLd data={breadcrumbSchema(BREADCRUMBS)} />
       <section className={`page-hero ${styles.hero}`}>
         <div className={`page-hero-bg ${styles.heroBg}`} />
         <div className="page-hero-content page-container">

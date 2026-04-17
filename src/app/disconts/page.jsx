@@ -1,9 +1,16 @@
 import Link from "next/link";
 import OpenCallbackButton from "../../components/OpenCallbackButton";
 import SiteShell from "../../components/SiteShell";
+import JsonLd from "../../components/JsonLd";
 import { PAGE_INTRO } from "../../data/siteData";
 import { getPageMetadata } from "../../lib/metadata";
+import { breadcrumbSchema } from "../../lib/schema";
 import styles from "./page.module.css";
+
+const BREADCRUMBS = [
+  { name: "Главная", path: "/" },
+  { name: "Акции", path: "/disconts/" },
+];
 
 export const metadata = getPageMetadata("offers");
 
@@ -69,6 +76,7 @@ const OFFER_ITEMS = [
 export default function OffersPage() {
   return (
     <SiteShell>
+      <JsonLd data={breadcrumbSchema(BREADCRUMBS)} />
       <section className={`page-hero ${styles.hero}`}>
         <div className={`page-hero-bg ${styles.heroBg}`} />
         <div className="page-hero-content page-container">
@@ -129,7 +137,11 @@ export default function OffersPage() {
                 key={offer.id}
               >
                 <div className={styles.detailVisual}>
-                  <img src={offer.image} alt={offer.title} />
+                  <img
+                    src={offer.image}
+                    alt={`${offer.title} — ${offer.kicker} в гостинице «Уют» Клинцы`}
+                    loading="lazy"
+                  />
                 </div>
                 <div className={styles.detailCopy}>
                   <div className={styles.detailTopline}>
