@@ -1,6 +1,41 @@
 export const SITE_URL = "https://uyut-centr.ru";
 export const SITE_NAME = "Гостиница «Уют»";
 
+// Hotel-wide messengers & external profiles. `url: null` = hidden until provided.
+export const SOCIAL_LINKS = {
+  whatsapp: { label: "WhatsApp", url: null },
+  telegram: { label: "Telegram", url: "https://t.me/hotel_uyut32" },
+  vk: { label: "ВКонтакте", url: null },
+  max: { label: "MAX", url: null },
+  yandexBusiness: {
+    label: "Яндекс Бизнес",
+    url: "https://yandex.com/maps/org/uyut/1127955797/",
+  },
+  yandexMaps: {
+    label: "Яндекс Карты",
+    url: "https://yandex.com/maps/org/uyut/1127955797/?ll=32.235271%2C52.749840&z=17",
+  },
+};
+
+// Restaurant «Метрополь» own profiles — shown on /menu/ only.
+export const RESTAURANT_LINKS = {
+  telegram: { label: "Telegram", url: "https://t.me/hotel_uyut32" },
+  vk: { label: "ВКонтакте", url: "https://vk.ru/metropol__klintsy" },
+  max: { label: "MAX", url: null },
+  yandexBusiness: {
+    label: "Яндекс Бизнес",
+    url: "https://yandex.com/maps/org/metropol/96560811432/",
+  },
+};
+
+export const PAGE_INTRO = {
+  rooms: "Семь категорий — от одноместных до двухкомнатных люксов с отдельной спальней. Завтрак и Wi-Fi уже включены.",
+  services: "Бесплатная парковка, сауна, трансфер, прачечная и конференц-зал — всё, что нужно помимо номера.",
+  offers: "Действующие предложения для гостей: скидки за прямое бронирование, подарки молодожёнам и особые условия в день рождения.",
+  restaurant: "Ресторан «Метрополь» при гостинице: европейская кухня, завтраки шведский стол и обслуживание в номер.",
+  contacts: "Позвоните, напишите или загляните напрямую — ответим быстро по любому каналу.",
+};
+
 export const NAV_ITEMS = [
   { label: "Об отеле", href: "/about-us/" },
   { label: "Номера", href: "/prices_and_rooms/" },

@@ -14,6 +14,7 @@ import ReviewsSection from "./ReviewsSection";
 import PaymentSection from "./PaymentSection";
 import ContactsSection from "./ContactsSection";
 import BookingModal from "./BookingModal";
+import RoomGalleryModal from "./RoomGalleryModal";
 
 export default function HomePageClient() {
   const [paymentMethod, setPaymentMethod] = useState("Банковская карта");
@@ -21,6 +22,7 @@ export default function HomePageClient() {
   const [roomImgErrors, setRoomImgErrors] = useState({});
   const [bookingRoom, setBookingRoom] = useState(null);
   const [bookingOpen, setBookingOpen] = useState(false);
+  const [galleryRoom, setGalleryRoom] = useState(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -61,6 +63,10 @@ export default function HomePageClient() {
     setBookingOpen(true);
   };
 
+  const handleOpenGallery = (room) => {
+    setGalleryRoom(room);
+  };
+
   return (
     <SiteShell>
       <HeroSection />
@@ -68,6 +74,7 @@ export default function HomePageClient() {
       <AboutSection />
       <RoomsSection
         onBookRoom={handleBookRoom}
+        onOpenGallery={handleOpenGallery}
         onRoomImgError={handleRoomImgError}
         roomImgErrors={roomImgErrors}
       />
@@ -88,6 +95,11 @@ export default function HomePageClient() {
         onClose={() => setBookingOpen(false)}
         selectedRoomName={bookingRoom?.name}
         selectedWidgetRoomName={bookingRoom?.widgetRoomName}
+      />
+      <RoomGalleryModal
+        room={galleryRoom}
+        initialIndex={0}
+        onClose={() => setGalleryRoom(null)}
       />
     </SiteShell>
   );

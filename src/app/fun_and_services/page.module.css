@@ -17,22 +17,36 @@
 }
 
 .fact {
-  padding: 22px 24px;
-  background: rgba(255,255,255,.05);
-  border: 1px solid rgba(255,255,255,.1);
+  position: relative;
+  padding: 24px 26px 22px;
+  background:
+    linear-gradient(135deg, rgba(184,150,62,.2) 0%, rgba(184,150,62,.04) 55%, rgba(15,15,15,.18) 100%);
+  border: 1px solid rgba(184,150,62,.3);
+  overflow: hidden;
+}
+
+.fact::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top left, rgba(255,255,255,.06), transparent 60%);
+  pointer-events: none;
 }
 
 .fact strong {
+  position: relative;
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   font-family: var(--font-display);
-  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-size: clamp(2rem, 3.2vw, 2.7rem);
+  font-weight: 600;
   color: #fff;
 }
 
 .fact span {
-  color: rgba(255,255,255,.64);
-  font-size: .78rem;
+  position: relative;
+  color: rgba(255,255,255,.8);
+  font-size: .82rem;
   letter-spacing: 1.4px;
   text-transform: uppercase;
   line-height: 1.6;
@@ -169,8 +183,9 @@
 }
 
 .detailVisual {
-  min-height: 300px;
+  aspect-ratio: 4 / 3;
   background: #222;
+  overflow: hidden;
 }
 
 .detailVisual img {
@@ -200,9 +215,16 @@
 }
 
 .detailText {
-  color: rgba(255,255,255,.68);
-  font-size: .95rem;
-  line-height: 1.85;
+  color: rgba(255,255,255,.88);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+@media (min-width: 640px) {
+  .detailText {
+    text-align: justify;
+    hyphens: auto;
+  }
 }
 
 .detailTags {
@@ -224,8 +246,24 @@
 
 .actions {
   display: flex;
-  gap: 14px;
+  gap: 16px;
   flex-wrap: wrap;
+}
+
+.actions :global(.hero-btn) {
+  min-width: 220px;
+  justify-content: center;
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  .actions {
+    flex-direction: column;
+  }
+  .actions :global(.hero-btn) {
+    width: 100%;
+    min-width: 0;
+  }
 }
 
 @media (max-width: 960px) {

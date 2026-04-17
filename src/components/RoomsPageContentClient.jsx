@@ -31,11 +31,19 @@ export default function RoomsPageContentClient({ breakfastNote, rooms }) {
         </div>
       </section>
 
-      <section className="section section-dark fade-section visible">
+      <section
+        id="room-details"
+        className="section section-dark fade-section visible"
+      >
         <div className="page-container">
           <div className={`offers-header ${styles.header}`}>
             <div className="section-label">Подробнее</div>
             <h2 className="section-title">Что входит в каждый номер</h2>
+            <div className="gold-line" />
+            <p className="section-desc">
+              Планировки, мебель, ванная, сервис и особенности каждого формата
+              размещения — подробно по каждой категории.
+            </p>
           </div>
           <RoomsPageDetailsClient rooms={rooms} onBookRoom={handleBookRoom} />
         </div>
@@ -56,6 +64,27 @@ export default function RoomsPageContentClient({ breakfastNote, rooms }) {
             <a className="hero-btn" href="tel:+79307224888">
               Позвонить
             </a>
+          </div>
+        </div>
+      </section>
+
+      <section className="section fade-section visible">
+        <div className={`page-container ${styles.servicesTeaser}`}>
+          <div>
+            <div className="section-label">Помимо номера</div>
+            <h2 className="section-title">
+              Парковка, сауна, трансфер и конференц-зал
+            </h2>
+            <p className="section-desc">
+              В стоимость проживания уже включены завтрак и Wi-Fi, а в отеле
+              доступны дополнительные услуги: от бесплатной парковки до сауны и
+              помещения для переговоров.
+            </p>
+          </div>
+          <div className={styles.ctaActions}>
+            <Link className="hero-btn" href="/fun_and_services/">
+              Смотреть услуги
+            </Link>
           </div>
         </div>
       </section>

@@ -60,27 +60,44 @@
 }
 
 .stat {
-  padding: 22px 24px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
+  position: relative;
+  padding: 24px 26px 22px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(184, 150, 62, 0.2) 0%,
+      rgba(184, 150, 62, 0.04) 55%,
+      rgba(15, 15, 15, 0.18) 100%
+    );
+  border: 1px solid rgba(184, 150, 62, 0.3);
+  overflow: hidden;
+}
+
+.stat::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.06), transparent 60%);
+  pointer-events: none;
 }
 
 .stat strong {
+  position: relative;
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   font-family: var(--font-display);
-  font-size: clamp(1.8rem, 3vw, 2.6rem);
-  font-weight: 500;
+  font-size: clamp(2rem, 3.2vw, 2.7rem);
+  font-weight: 600;
   color: #fff;
 }
 
 .stat span {
-  color: rgba(255, 255, 255, 0.62);
-  font-size: 0.8rem;
+  position: relative;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.82rem;
   line-height: 1.6;
   text-transform: uppercase;
-  letter-spacing: 1.2px;
+  letter-spacing: 1.4px;
 }
 
 .intro {
@@ -96,9 +113,16 @@
 }
 
 .story p {
-  color: var(--text-light);
+  color: var(--text);
   line-height: 1.9;
-  font-size: 0.96rem;
+  font-size: 1rem;
+}
+
+@media (min-width: 640px) {
+  .story p {
+    text-align: justify;
+    hyphens: auto;
+  }
 }
 
 .featureList {
@@ -137,14 +161,14 @@
 .galleryCard {
   position: relative;
   overflow: hidden;
-  min-height: 220px;
+  aspect-ratio: 4 / 3;
   background: #d8d0c3;
   box-shadow: 0 18px 48px rgba(26, 26, 26, 0.08);
 }
 
 .galleryCardLarge {
   grid-column: 1 / -1;
-  min-height: 360px;
+  aspect-ratio: 16 / 9;
 }
 
 .galleryCard::after {
@@ -307,6 +331,6 @@
   }
 
   .galleryCardLarge {
-    min-height: 280px;
+    aspect-ratio: 3 / 2;
   }
 }

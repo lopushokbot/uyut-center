@@ -139,7 +139,9 @@ export default function ContactForm({
       }
     } catch (error) {
       setStatus("error");
-      setMessage(error.message || "Не удалось отправить форму.");
+      setMessage(
+        "Не удалось отправить форму. Позвоните напрямую +7 (930) 722-48-88 или напишите на yut.klintsi@yandex.ru — ответим быстро.",
+      );
     }
   };
 

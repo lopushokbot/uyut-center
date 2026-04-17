@@ -25,22 +25,36 @@
 }
 
 .fact {
-  padding: 22px 24px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  padding: 24px 26px 22px;
+  background:
+    linear-gradient(135deg, rgba(184, 150, 62, 0.2) 0%, rgba(184, 150, 62, 0.04) 55%, rgba(15, 15, 15, 0.18) 100%);
+  border: 1px solid rgba(184, 150, 62, 0.3);
+  overflow: hidden;
+}
+
+.fact::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.06), transparent 60%);
+  pointer-events: none;
 }
 
 .fact strong {
+  position: relative;
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   font-family: var(--font-display);
-  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-size: clamp(2rem, 3.2vw, 2.7rem);
+  font-weight: 600;
   color: #fff;
 }
 
 .fact span {
-  color: rgba(255, 255, 255, 0.64);
-  font-size: 0.78rem;
+  position: relative;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.82rem;
   letter-spacing: 1.4px;
   text-transform: uppercase;
   line-height: 1.6;
@@ -100,7 +114,7 @@
 }
 
 .detailVisual {
-  min-height: 320px;
+  aspect-ratio: 4 / 3;
   background: #222;
   position: relative;
   cursor: grab;
@@ -123,7 +137,6 @@
 
 .detailVisualSlide {
   flex: 0 0 100%;
-  min-height: 320px;
 }
 
 .detailVisualSlide img {
@@ -169,17 +182,20 @@
   margin-bottom: 14px;
 }
 
-.detailTopline span {
-  color: var(--gold-light);
-  font-size: 1.5rem;
+.detailTopline span,
+.detailTopline strong {
+  font-size: 0.74rem;
   text-transform: uppercase;
   letter-spacing: 1.6px;
+  font-weight: 600;
+}
+
+.detailTopline span {
+  color: var(--gold-light);
 }
 
 .detailTopline strong {
   color: #fff;
-  font-size: 2rem;
-  letter-spacing: 1.6px;
 }
 
 .detailTitle {
@@ -217,34 +233,29 @@
   margin-top: 28px;
 }
 
-.detailBookBtn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+.detailActions :global(.hero-btn) {
   min-width: 220px;
-  padding: 15px 24px;
-  border: 1px solid rgba(184, 150, 62, 0.7);
-  background: rgba(184, 150, 62, 0.1);
-  color: #fff;
-  font-family: var(--font-body);
-  font-size: 0.74rem;
-  font-weight: 600;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition:
-    background 0.3s,
-    border-color 0.3s,
-    transform 0.2s,
-    box-shadow 0.3s;
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.18);
 }
 
-.detailBookBtn:hover {
-  background: var(--gold);
-  border-color: var(--gold-light);
-  transform: translateY(-1px);
-  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.22);
+
+.servicesTeaser {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(260px, 0.6fr);
+  gap: 32px;
+  align-items: center;
+  padding: 36px 38px;
+  background:
+    linear-gradient(135deg, rgba(184, 150, 62, 0.12), rgba(255, 255, 255, 0.92)),
+    #fff;
+  border: 1px solid rgba(184, 150, 62, 0.2);
+  box-shadow: 0 18px 50px rgba(26, 26, 26, 0.06);
+}
+
+.servicesTeaser :global(.hero-btn) {
+  width: 100%;
+  min-width: 260px;
+  justify-content: center;
+  text-align: center;
 }
 
 .ctaActions {
@@ -414,8 +425,13 @@
   .facts,
   .breakfast,
   .detail,
-  .isReversed {
+  .isReversed,
+  .servicesTeaser {
     grid-template-columns: 1fr;
+  }
+
+  .servicesTeaser {
+    padding: 28px 24px;
   }
 
   .isReversed .detailVisual,

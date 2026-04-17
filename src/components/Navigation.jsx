@@ -53,6 +53,16 @@ export default function Navigation({
         <a href="tel:+79307224888" onClick={onCloseMobile}>
           +7 (930) 722-48-88
         </a>
+        <button
+          type="button"
+          className="mobile-menu-cta"
+          onClick={() => {
+            onCloseMobile?.();
+            onOpenCallback?.();
+          }}
+        >
+          Обратный звонок
+        </button>
       </div>
     </>
   );

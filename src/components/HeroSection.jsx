@@ -17,7 +17,7 @@ export default function HeroSection() {
         <p className="hero-location">г. Клинцы · ул. К. Маркса, д. 1</p>
         <div className="hero-divider" />
         <p className="hero-tagline">Для тех, кто ценит комфорт и своё время</p>
-        <Link href="/prices_and_rooms/" className="hero-btn">
+        <Link href="/prices_and_rooms/#room-details" className="hero-btn">
           Смотреть номера
         </Link>
       </div>

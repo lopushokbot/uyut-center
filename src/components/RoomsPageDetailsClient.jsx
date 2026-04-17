@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { createPortal } from "react-dom";
+import { useRef, useState } from "react";
+import RoomGalleryModal from "./RoomGalleryModal";
 import styles from "./RoomsPage.module.css";
 
 function RoomImageCarousel({ room, onOpenGallery }) {
@@ -165,10 +165,6 @@ function RoomImageCarousel({ room, onOpenGallery }) {
 export default function RoomsPageDetailsClient({ rooms, onBookRoom }) {
   const [galleryRoom, setGalleryRoom] = useState(null);
   const [galleryIndex, setGalleryIndex] = useState(0);
-  const [galleryDragOffsetX, setGalleryDragOffsetX] = useState(0);
-  const [isGalleryDragging, setIsGalleryDragging] = useState(false);
-  const galleryDragStartXRef = useRef(null);
-  const galleryDragDeltaXRef = useRef(0);
 
   const openGallery = (room, startIndex = 0) => {
     setGalleryRoom(room);
@@ -178,58 +174,7 @@ export default function RoomsPageDetailsClient({ rooms, onBookRoom }) {
   const closeGallery = () => {
     setGalleryRoom(null);
     setGalleryIndex(0);
-    setGalleryDragOffsetX(0);
-    setIsGalleryDragging(false);
   };
-
-  const showPrevImage = () => {
-    if (!galleryRoom) {
-      return;
-    }
-
-    setGalleryIndex((currentIndex) =>
-      currentIndex === 0 ? galleryRoom.gallery.length - 1 : currentIndex - 1,
-    );
-  };
-
-  const showNextImage = () => {
-    if (!galleryRoom) {
-      return;
-    }
-
-    setGalleryIndex((currentIndex) =>
-      currentIndex === galleryRoom.gallery.length - 1 ? 0 : currentIndex + 1,
-    );
-  };
-
-  useEffect(() => {
-    if (!galleryRoom) {
-      return undefined;
-    }
-
-    const onKeyDown = (event) => {
-      if (event.key === "Escape") {
-        closeGallery();
-      }
-
-      if (event.key === "ArrowLeft") {
-        showPrevImage();
-      }
-
-      if (event.key === "ArrowRight") {
-        showNextImage();
-      }
-    };
-
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    window.addEventListener("keydown", onKeyDown);
-
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", onKeyDown);
-    };
-  }, [galleryRoom]);
 
   return (
     <>
@@ -257,7 +202,7 @@ export default function RoomsPageDetailsClient({ rooms, onBookRoom }) {
               </div>
               <div className={styles.detailActions}>
                 <button
-                  className={styles.detailBookBtn}
+                  className="hero-btn"
                   data-room-name={room.widgetRoomName}
                   onClick={() => onBookRoom(room)}
                   type="button"
@@ -270,189 +215,11 @@ export default function RoomsPageDetailsClient({ rooms, onBookRoom }) {
         ))}
       </div>
 
-      {galleryRoom && typeof document !== "undefined"
-        ? createPortal(
-            <div className={styles.galleryOverlay} onClick={closeGallery}>
-              <div
-                className={styles.galleryModal}
-                onClick={(event) => event.stopPropagation()}
-              >
-                <button
-                  aria-label="Закрыть галерею"
-                  className={styles.galleryClose}
-                  onClick={closeGallery}
-                  type="button"
-                >
-                  ×
-                </button>
-
-                <div className={styles.galleryHeader}>
-                  <div>
-                    <p className={styles.galleryKicker}>Фотографии номера</p>
-                    <h3 className={styles.galleryTitle}>{galleryRoom.name}</h3>
-                  </div>
-                  <p className={styles.galleryCounter}>
-                    {galleryIndex + 1} / {galleryRoom.gallery.length}
-                  </p>
-                </div>
-
-                <div className={styles.galleryStage}>
-                  {galleryRoom.gallery.length > 1 ? (
-                    <button
-                      aria-label="Предыдущее фото"
-                      className={`${styles.galleryNav} ${styles.galleryNavPrev}`}
-                      onClick={showPrevImage}
-                      type="button"
-                    >
-                      ‹
-                    </button>
-                  ) : null}
-
-                  <div
-                    className={styles.galleryImageWrap}
-                    onPointerDown={(event) => {
-                      if (!event.isPrimary) {
-                        return;
-                      }
-
-                      galleryDragStartXRef.current = event.clientX;
-                      galleryDragDeltaXRef.current = 0;
-                      setGalleryDragOffsetX(0);
-                      setIsGalleryDragging(true);
-                      event.currentTarget.setPointerCapture(event.pointerId);
-                    }}
-                    onPointerMove={(event) => {
-                      if (galleryDragStartXRef.current === null) {
-                        return;
-                      }
-
-                      const deltaX =
-                        event.clientX - galleryDragStartXRef.current;
-                      galleryDragDeltaXRef.current = deltaX;
-                      setGalleryDragOffsetX(deltaX);
-                    }}
-                    onPointerUp={(event) => {
-                      if (galleryDragStartXRef.current === null) {
-                        return;
-                      }
-
-                      if (
-                        event.currentTarget.hasPointerCapture?.(event.pointerId)
-                      ) {
-                        event.currentTarget.releasePointerCapture(
-                          event.pointerId,
-                        );
-                      }
-
-                      if (
-                        Math.abs(galleryDragDeltaXRef.current) > 60 &&
-                        galleryRoom.gallery.length > 1
-                      ) {
-                        if (galleryDragDeltaXRef.current < 0) {
-                          showNextImage();
-                        } else {
-                          showPrevImage();
-                        }
-                      }
-
-                      galleryDragStartXRef.current = null;
-                      galleryDragDeltaXRef.current = 0;
-                      setGalleryDragOffsetX(0);
-                      setIsGalleryDragging(false);
-                    }}
-                    onPointerCancel={(event) => {
-                      if (
-                        event.currentTarget.hasPointerCapture?.(event.pointerId)
-                      ) {
-                        event.currentTarget.releasePointerCapture(
-                          event.pointerId,
-                        );
-                      }
-
-                      galleryDragStartXRef.current = null;
-                      galleryDragDeltaXRef.current = 0;
-                      setGalleryDragOffsetX(0);
-                      setIsGalleryDragging(false);
-                    }}
-                    onPointerLeave={(event) => {
-                      if (galleryDragStartXRef.current === null) {
-                        return;
-                      }
-
-                      if (
-                        event.currentTarget.hasPointerCapture?.(event.pointerId)
-                      ) {
-                        event.currentTarget.releasePointerCapture(
-                          event.pointerId,
-                        );
-                      }
-
-                      galleryDragStartXRef.current = null;
-                      galleryDragDeltaXRef.current = 0;
-                      setGalleryDragOffsetX(0);
-                      setIsGalleryDragging(false);
-                    }}
-                  >
-                    <div
-                      className={`${styles.galleryImageTrack} ${
-                        isGalleryDragging ? styles.isDragging : ""
-                      }`.trim()}
-                      style={{
-                        transform: `translate3d(calc(${-galleryIndex * 100}% + ${galleryDragOffsetX}px), 0, 0)`,
-                      }}
-                    >
-                      {galleryRoom.gallery.map((image, imageIndex) => (
-                        <div
-                          className={styles.galleryImageSlide}
-                          key={`${galleryRoom.id}-gallery-${imageIndex}`}
-                        >
-                          <img
-                            alt={`${galleryRoom.name} — фото ${imageIndex + 1}`}
-                            className={styles.galleryImage}
-                            draggable="false"
-                            src={image}
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {galleryRoom.gallery.length > 1 ? (
-                    <button
-                      aria-label="Следующее фото"
-                      className={`${styles.galleryNav} ${styles.galleryNavNext}`}
-                      onClick={showNextImage}
-                      type="button"
-                    >
-                      ›
-                    </button>
-                  ) : null}
-                </div>
-
-                {galleryRoom.gallery.length > 1 ? (
-                  <div className={styles.galleryThumbs}>
-                    {galleryRoom.gallery.map((image, imageIndex) => (
-                      <button
-                        aria-label={`Показать фото ${imageIndex + 1}`}
-                        className={`${styles.galleryThumb} ${
-                          imageIndex === galleryIndex
-                            ? styles.galleryThumbActive
-                            : ""
-                        }`.trim()}
-                        key={image}
-                        onClick={() => setGalleryIndex(imageIndex)}
-                        type="button"
-                      >
-                        <img alt="" src={image} />
-                      </button>
-                    ))}
-                  </div>
-                ) : null}
-              </div>
-            </div>,
-            document.body,
-          )
-        : null}
+      <RoomGalleryModal
+        room={galleryRoom}
+        initialIndex={galleryIndex}
+        onClose={closeGallery}
+      />
     </>
   );
 }

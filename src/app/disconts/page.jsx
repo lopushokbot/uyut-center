@@ -1,6 +1,7 @@
 import Link from "next/link";
 import OpenCallbackButton from "../../components/OpenCallbackButton";
 import SiteShell from "../../components/SiteShell";
+import { PAGE_INTRO } from "../../data/siteData";
 import { getPageMetadata } from "../../lib/metadata";
 import styles from "./page.module.css";
 
@@ -9,7 +10,7 @@ export const metadata = getPageMetadata("offers");
 const OFFER_FACTS = [
   { value: "5", label: "акций и спецпредложений" },
   { value: "−30%", label: "скидка именинникам" },
-  { value: "Бесплатно", label: "люкс или трансфер в подарок" },
+  { value: "В подарок", label: "люкс или трансфер" },
 ];
 
 const OFFER_ITEMS = [
@@ -48,10 +49,10 @@ const OFFER_ITEMS = [
     title: "Конференц-зал",
     kicker: "Для встреч и мероприятий",
     image: "https://uyut-centr.ru/wp-content/uploads/2021/05/1234_0.jpg",
-    accent: "500 ₽/час",
+    accent: "В наличии",
     summary:
-      "Гостиница «Уют» предлагает воспользоваться услугой «Конференц-зал» по привлекательной цене: 500 руб/час.",
-    tags: ["500 ₽/час", "Переговоры", "Мероприятия"],
+      "Собственный конференц-зал в гостинице подходит для переговоров, презентаций и небольших деловых мероприятий.",
+    tags: ["Переговоры", "Презентации", "Мероприятия"],
   },
   {
     id: "birthday",
@@ -75,11 +76,7 @@ export default function OffersPage() {
             Спецпредложения гостиницы
           </div>
           <h1 className="page-hero-title">Акции и специальные предложения</h1>
-          <p className="page-hero-desc">
-            Собрал предложения со старого сайта в более цельную страницу:
-            подарки для молодожёнов, скидки в ресторане и на проживание,
-            бесплатный трансфер и конференц-зал.
-          </p>
+          <p className="page-hero-desc">{PAGE_INTRO.offers}</p>
           <div className={styles.facts}>
             {OFFER_FACTS.map((fact) => (
               <div className={styles.fact} key={fact.label}>
@@ -95,20 +92,19 @@ export default function OffersPage() {
         <div className={`page-container ${styles.intro}`}>
           <div>
             <div className="section-label">Актуальные предложения</div>
-            <h2 className="section-title">Поводы бронировать напрямую</h2>
+            <h2 className="section-title">Что получают гости отеля</h2>
             <div className="gold-line" />
             <p className="section-desc">
-              Здесь собраны акции из исходного HTML-файла страницы отеля. Я
-              сохранил сами условия, но оформил их в более понятную и
-              последовательную структуру.
+              Скидки при прямом бронировании, подарки к свадьбе, бесплатный
+              трансфер и особые условия ко дню рождения — всё вместе на одной
+              странице.
             </p>
           </div>
           <div className={styles.note}>
-            <span>Для отдыха и событий</span>
+            <span>Как воспользоваться</span>
             <p>
-              Предложения охватывают проживание, ресторан и дополнительные
-              сервисы, поэтому страница работает и как витрина акций, и как
-              быстрый ориентир по выгодам для гостя.
+              Скажите на стойке регистрации, что у вас свадьба, день рождения
+              или нужен трансфер — мы подтвердим условия и оформим предложение.
             </p>
           </div>
         </div>
@@ -119,6 +115,11 @@ export default function OffersPage() {
           <div className={`offers-header ${styles.header}`}>
             <div className="section-label">Подробно</div>
             <h2 className="section-title">Что именно получает гость</h2>
+            <div className="gold-line" />
+            <p className="section-desc">
+              Подробные условия каждой акции: что входит, как оформить и когда
+              предложение действует.
+            </p>
           </div>
 
           <div className={styles.detailList}>

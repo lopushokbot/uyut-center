@@ -1,5 +1,7 @@
 import SiteShell from "../../components/SiteShell";
 import ContactForm from "../../components/ContactForm";
+import SocialLinks from "../../components/SocialLinks";
+import { SOCIAL_LINKS, PAGE_INTRO } from "../../data/siteData";
 import { getPageMetadata } from "../../lib/metadata";
 import styles from "./page.module.css";
 
@@ -7,8 +9,8 @@ export const metadata = getPageMetadata("contacts");
 
 const CONTACT_FACTS = [
   { value: "24/7", label: "стойка регистрации" },
-  { value: "Расположение", label: "адрес в центре Клинцов" },
-  { value: "Быстрая", label: "связь по телефону и email" },
+  { value: "Центр", label: "адрес в центре Клинцов" },
+  { value: "Быструю", label: "связь по телефону и email" },
 ];
 
 const CONTACT_ITEMS = [
@@ -25,10 +27,12 @@ const CONTACT_ITEMS = [
   {
     label: "Адрес",
     value: "г. Клинцы, ул. К. Маркса, д. 1",
+    href: SOCIAL_LINKS.yandexMaps.url,
+    hint: "Открыть в Яндекс Картах",
   },
   {
-    label: "Обратная связь",
-    value: "По телефону, email и через форму ниже",
+    label: "Режим работы",
+    value: "Круглосуточно · без выходных",
   },
 ];
 
@@ -40,10 +44,7 @@ export default function ContactPage() {
         <div className="page-hero-content page-container">
           <div className="hero-stars page-eyebrow">Связь с гостиницей</div>
           <h1 className="page-hero-title">Контакты</h1>
-          <p className="page-hero-desc">
-            На основе исходной страницы контактов собрал более цельный экран:
-            адрес, телефон, email, карта и понятный блок для обратной связи.
-          </p>
+          <p className="page-hero-desc">{PAGE_INTRO.contacts}</p>
           <div className={styles.facts}>
             {CONTACT_FACTS.map((fact) => (
               <div className={styles.fact} key={fact.label}>
@@ -64,10 +65,16 @@ export default function ContactPage() {
             </h2>
             <div className="gold-line" />
             <p className="section-desc">
-              В старом HTML акцент был на телефоне, адресе, email и форме
-              обратной связи. Я сохранил эту структуру, но собрал её в более
-              читаемый и быстрый для гостя формат.
+              Позвоните на стойку регистрации, напишите на почту или откройте
+              адрес на карте — ответим максимально быстро по любому каналу.
             </p>
+
+            <div className={styles.socialsBlock}>
+              <div className="section-label" style={{ marginBottom: 14 }}>
+                Мессенджеры
+              </div>
+              <SocialLinks keys={["whatsapp", "telegram", "vk", "max"]} />
+            </div>
           </div>
 
           <div className={styles.panel}>
@@ -75,10 +82,19 @@ export default function ContactPage() {
               <div className={styles.row} key={item.label}>
                 <span>{item.label}</span>
                 {item.href ? (
-                  <a href={item.href}>{item.value}</a>
+                  <a
+                    href={item.href}
+                    rel={
+                      item.href.startsWith("http") ? "noopener noreferrer" : undefined
+                    }
+                    target={item.href.startsWith("http") ? "_blank" : undefined}
+                  >
+                    {item.value}
+                  </a>
                 ) : (
                   <strong>{item.value}</strong>
                 )}
+                {item.hint ? <em className={styles.hint}>{item.hint}</em> : null}
               </div>
             ))}
           </div>
@@ -90,9 +106,11 @@ export default function ContactPage() {
           <div className={styles.formWrap}>
             <div className="section-label">Остались вопросы?</div>
             <h2 className="section-title">Форма обратной связи</h2>
+            <div className="gold-line" />
             <p className="section-desc">
-              На оригинальной странице был именно такой сценарий: оставить имя,
-              телефон, email и комментарий. Здесь сохранён тот же состав полей.
+              Оставьте имя, телефон и короткий комментарий — мы перезвоним в
+              рабочее время. Если нужен срочный ответ — звоните напрямую по
+              номеру выше.
             </p>
             <ContactForm preset="contact" source="contact_page" />
           </div>
@@ -109,7 +127,27 @@ export default function ContactPage() {
                 />
               </div>
               <div className={styles.mapCaption}>
-                г. Клинцы, ул. К. Маркса, д. 1
+                <div>г. Клинцы, ул. К. Маркса, д. 1</div>
+                <div className={styles.mapLinks}>
+                  <a
+                    className={styles.mapLink}
+                    href={SOCIAL_LINKS.yandexMaps.url}
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    Открыть в Яндекс Картах
+                  </a>
+                  {SOCIAL_LINKS.yandexBusiness.url ? (
+                    <a
+                      className={styles.mapLink}
+                      href={SOCIAL_LINKS.yandexBusiness.url}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      Профиль на Яндекс Бизнес
+                    </a>
+                  ) : null}
+                </div>
               </div>
             </div>
           </div>

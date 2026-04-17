@@ -1,37 +1,39 @@
 import Link from "next/link";
 import SiteShell from "../../components/SiteShell";
 import OpenCallbackButton from "../../components/OpenCallbackButton";
+import SocialLinks from "../../components/SocialLinks";
 import { RESTAURANT_MENU_URL } from "../../data/hotelData";
+import { PAGE_INTRO, RESTAURANT_LINKS } from "../../data/siteData";
 import { getPageMetadata } from "../../lib/metadata";
 import styles from "./page.module.css";
 
 export const metadata = getPageMetadata("restaurant");
 
 const RESTAURANT_FACTS = [
-  { value: "10%", label: "скидка для гостей" },
-  { value: "Рум сервис", label: "обслуживание в номер" },
-  { value: "Меню", label: "разнообразный выбор блюд" },
+  { value: "−10%", label: "скидка для гостей отеля" },
+  { value: "В номер", label: "обслуживание без выхода из номера" },
+  { value: "Меню", label: "европейская и русская кухня" },
 ];
 
 const RESTAURANT_FEATURES = [
   {
     title: "Скидка для гостей 10%",
-    text: "Постояльцы гостиницы получают специальную скидку на заказы в ресторане «Метрополь».",
+    text: "Постояльцы гостиницы получают скидку 10% на заказы в ресторане «Метрополь» — покажите карту гостя при заказе.",
     accent: "Для гостей отеля",
   },
   {
     title: "Обслуживание в номер",
-    text: "Часть позиций можно заказать прямо в номер, если хочется ужинать спокойно и без спешки.",
+    text: "Часть блюд можно заказать прямо в номер — удобно после дороги или перед ранним выездом.",
     accent: "Удобно после дороги",
   },
   {
     title: "Разнообразное меню",
-    text: "Ресторанная страница старого сайта акцентировала именно на широком выборе блюд и комфортном формате питания.",
+    text: "Европейская и русская кухня, сезонные предложения и детские блюда — подойдёт для завтрака, обеда и ужина.",
     accent: "На каждый день",
   },
   {
     title: "Ресторан «Метрополь»",
-    text: "Пространство подходит для завтраков, деловых встреч, спокойных ужинов и неформальных бесед в поездке.",
+    text: "Спокойная атмосфера для завтраков, деловых встреч и вечерних ужинов в центре города.",
     accent: "Внутри гостиницы",
   },
 ];
@@ -44,10 +46,7 @@ export default function MenuPage() {
         <div className="page-hero-content page-container">
           <div className="hero-stars page-eyebrow">Гастрономия в гостинице</div>
           <h1 className="page-hero-title">Ресторан «Метрополь»</h1>
-          <p className="page-hero-desc">
-            На основе старой страницы ресторана собрал более выразительный
-            экран: ключевые преимущества, атмосфера и быстрый переход к меню.
-          </p>
+          <p className="page-hero-desc">{PAGE_INTRO.restaurant}</p>
           <div className={styles.facts}>
             {RESTAURANT_FACTS.map((fact) => (
               <div className={styles.fact} key={fact.label}>
@@ -68,10 +67,9 @@ export default function MenuPage() {
             </h2>
             <div className="gold-line" />
             <p className="section-desc">
-              В исходном HTML ресторан был описан коротко, но по делу:
-              «Метрополь», скидка для гостей, обслуживание в номер и
-              разнообразное меню. Я сохранил эти акценты и оформил их в
-              полноценную страницу.
+              Ресторан «Метрополь» работает для постояльцев и гостей города:
+              завтрак по системе «Шведский стол», обед и ужин, скидка 10% для
+              проживающих и возможность заказать блюда прямо в номер.
             </p>
             <div className={styles.actions}>
               <a
@@ -94,7 +92,33 @@ export default function MenuPage() {
               alt="Ресторан Метрополь"
             />
             <div className={styles.visualBadge}>Ресторан при гостинице</div>
+            {RESTAURANT_LINKS.yandexBusiness.url ? (
+              <a
+                className={styles.visualLink}
+                href={RESTAURANT_LINKS.yandexBusiness.url}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Открыть на Яндекс Бизнес →
+              </a>
+            ) : null}
           </div>
+        </div>
+      </section>
+
+      <section className="section fade-section visible">
+        <div className={`page-container ${styles.socials}`}>
+          <div>
+            <div className="section-label">Ресторан в соцсетях</div>
+            <h2 className="section-title">Следите за меню, событиями и акциями</h2>
+            <p className="section-desc">
+              Публикуем сезонные блюда, винные ужины и предложения для гостей.
+            </p>
+          </div>
+          <SocialLinks
+            keys={["telegram", "vk", "max"]}
+            links={RESTAURANT_LINKS}
+          />
         </div>
       </section>
 

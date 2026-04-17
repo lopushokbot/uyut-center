@@ -1,6 +1,7 @@
 import Link from "next/link";
 import SiteShell from "../../components/SiteShell";
 import OpenCallbackButton from "../../components/OpenCallbackButton";
+import { PAGE_INTRO } from "../../data/siteData";
 import { getPageMetadata } from "../../lib/metadata";
 import styles from "./page.module.css";
 
@@ -8,7 +9,7 @@ export const metadata = getPageMetadata("services");
 
 const SERVICE_FACTS = [
   { value: "24/7", label: "парковка для гостей" },
-  { value: "500 ₽", label: "конференц-зал в час" },
+  { value: "Зал", label: "для встреч и переговоров" },
   { value: "Сауна", label: "для отдыха после дороги" },
 ];
 
@@ -31,10 +32,10 @@ const SERVICE_ITEMS = [
     kicker: "Для встреч и переговоров",
     image: "https://uyut-centr.ru/wp-content/uploads/2021/05/1234_0.jpg",
     summary:
-      "Пространство для деловых мероприятий по понятной фиксированной ставке.",
+      "Оборудованное пространство для переговоров, презентаций и небольших деловых мероприятий.",
     description:
-      "Гостиница «Уют» предлагает воспользоваться услугой «Конференц-зал» по привлекательной цене: 500 руб/час.",
-    tags: ["500 ₽/час", "Переговоры", "Небольшие мероприятия"],
+      "Гостиница «Уют» предоставляет собственный конференц-зал для рабочих встреч, переговоров и небольших корпоративных мероприятий. Стоимость и условия уточняйте на стойке регистрации.",
+    tags: ["Переговоры", "Презентации", "Небольшие мероприятия"],
   },
   {
     id: "transfer",
@@ -80,10 +81,7 @@ export default function ServicesPage() {
         <div className="page-hero-content page-container">
           <div className="hero-stars page-eyebrow">Комфорт помимо номера</div>
           <h1 className="page-hero-title">Услуги гостиницы «Уют»</h1>
-          <p className="page-hero-desc">
-            Собрал страницу услуг на основе исходного сайта: парковка,
-            конференц-зал, бесплатный трансфер, прачечная и сауна для гостей.
-          </p>
+          <p className="page-hero-desc">{PAGE_INTRO.services}</p>
           <div className={styles.facts}>
             {SERVICE_FACTS.map((fact) => (
               <div className={styles.fact} key={fact.label}>
@@ -98,23 +96,23 @@ export default function ServicesPage() {
       <section className="section fade-section visible">
         <div className={`page-container ${styles.intro}`}>
           <div>
-            <div className="section-label">Что доступно гостям</div>
+            <div className="section-label">Чем можно воспользоваться</div>
             <h2 className="section-title">
-              Сервис, который решает бытовые и деловые задачи
+              Сервисы, которые упрощают проживание
             </h2>
             <div className="gold-line" />
             <p className="section-desc">
-              На старом сайте блок услуг был коротким, поэтому я сохранил его
-              фактуру, но оформил в более собранную страницу с понятной
-              иерархией и акцентами.
+              Всё, что может пригодиться гостю помимо номера: безопасно
+              оставить машину, быстро добраться до вокзала, обсудить дела в
+              конференц-зале, отдохнуть в сауне и разобраться с бытом во время
+              поездки.
             </p>
           </div>
           <div className={styles.note}>
-            <span>Для проживания и поездок</span>
+            <span>Коротко о главном</span>
             <p>
-              Здесь собраны именно дополнительные услуги отеля, которые помогают
-              с дорогой, машиной, встречами, отдыхом и бытовыми вопросами во время
-              проживания.
+              Парковка и трансфер — без доплаты. Сауна, конференц-зал и
+              прачечная — по запросу на стойке регистрации.
             </p>
           </div>
         </div>
@@ -151,6 +149,11 @@ export default function ServicesPage() {
           <div className={`offers-header ${styles.header}`}>
             <div className="section-label">Подробно</div>
             <h2 className="section-title">Чем именно можно воспользоваться</h2>
+            <div className="gold-line" />
+            <p className="section-desc">
+              Ниже — что доступно гостям в каждой услуге: формат, условия и
+              нюансы, о которых стоит знать ещё до заселения.
+            </p>
           </div>
 
           <div className={styles.detailList}>
