@@ -2,6 +2,15 @@
 
 import { useState } from "react";
 
+const HONEYPOT_STYLE = {
+  position: "absolute",
+  left: "-9999px",
+  width: "1px",
+  height: "1px",
+  opacity: 0,
+  pointerEvents: "none",
+};
+
 const FORM_PRESETS = {
   callback: {
     title: "Заказать звонок",
@@ -83,6 +92,7 @@ export default function ContactForm({
 }) {
   const config = FORM_PRESETS[preset] || FORM_PRESETS.contact;
   const [formData, setFormData] = useState(() => buildInitialState(config.fields));
+  const [honeypot, setHoneypot] = useState("");
   const [status, setStatus] = useState("idle");
   const [message, setMessage] = useState("");
 
@@ -118,6 +128,7 @@ export default function ContactForm({
         body: JSON.stringify({
           preset,
           source,
+          website: honeypot,
           ...Object.fromEntries(
             Object.entries(formData).map(([key, value]) => [key, value.trim()]),
           ),
@@ -139,14 +150,34 @@ export default function ContactForm({
       }
     } catch (error) {
       setStatus("error");
+      const serverMessage = typeof error?.message === "string" ? error.message : "";
+      const useServer =
+        serverMessage &&
+        serverMessage !== "Не удалось отправить форму." &&
+        serverMessage.length < 200;
       setMessage(
-        "Не удалось отправить форму. Позвоните напрямую +7 (930) 722-48-88 или напишите на yut.klintsi@yandex.ru — ответим быстро.",
+        useServer
+          ? serverMessage
+          : "Не удалось отправить форму. Позвоните +7 (930) 722-48-88 или напишите на yut.klintsi@yandex.ru — ответим быстро.",
       );
     }
   };
 
   return (
-    <form className={className} onSubmit={handleSubmit}>
+    <form className={className} onSubmit={handleSubmit} noValidate>
+      <div aria-hidden="true" style={HONEYPOT_STYLE}>
+        <label>
+          Website
+          <input
+            type="text"
+            name="website"
+            tabIndex={-1}
+            autoComplete="off"
+            value={honeypot}
+            onChange={(event) => setHoneypot(event.target.value)}
+          />
+        </label>
+      </div>
       {config.fields.map((field) =>
         field.type === "textarea" ? (
           <textarea

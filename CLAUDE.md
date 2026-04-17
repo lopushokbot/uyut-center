@@ -28,16 +28,16 @@ uyut-center/
 │   │   ├── page.jsx        # Home
 │   │   ├── globals.css
 │   │   ├── sitemap.js / robots.js
-│   │   ├── api/callback/route.js   # POST — email via nodemailer
+│   │   ├── api/callback/route.js   # POST — hardened (rate-limit, honeypot, validation)
 │   │   ├── about-us/ contact/ disconts/ fun_and_services/
 │   │   ├── menu/ prices_and_rooms/ reviews/
 │   │   └── terms/ terms-of-use/
 │   ├── components/         # Section + modal components (JSX)
-│   ├── data/               # hotelData.js, siteData.js, roomWidgetNames.js
-│   ├── lib/                # helpers
-│   └── styles/
-├── public/images/          # hero, rooms, restaurant photos
-├── res/                    # misc resources
+│   ├── data/               # hotelData.js, siteData.js, rooms.js, roomWidgetNames.js
+│   └── lib/                # metadata helpers
+├── public/
+│   ├── fonts/              # self-hosted Cormorant Garamond + Raleway .woff2
+│   └── images/             # hero, rooms, about photos
 └── SEO_AUDIT_PARTIAL.md    # in-progress SEO notes
 ```
 
@@ -50,9 +50,12 @@ Entry points: [src/app/layout.jsx](src/app/layout.jsx) wraps every page; [src/ap
 - **Email (outgoing)** — SMTP to Yandex (`smtp.yandex.ru:465`) from `/api/callback`. Leads delivered to `yut.klintsi@yandex.ru`.
 
 ## Deployment
-Not yet deployed. Next.js with an API route → needs a Node host (Vercel / Cloudflare Workers with Node compat / self-host). Cloudflare Pages static export will NOT work as-is because of `/api/callback`. Decide between:
-- **Vercel** — simplest, native Next.js support.
-- **Cloudflare Pages + Functions** — needs adapter; callback route must be ported to a Pages Function.
+Live on **Vercel**: https://uyut-center-eta.vercel.app (direct: https://uyut-center-571gpwxhm-ssteam.vercel.app).
+- Vercel project: `ssteam/uyut-center` (Sema's team account `simonsivakov-8383`)
+- Deploy manually with `vercel --prod --yes` from project root
+- GitHub auto-deploy NOT linked yet — pushes to `main` don't trigger deploys automatically
+- Vercel SSO protection is **disabled** (set via API on first deploy)
+- SMTP env vars must be **scoped to Production only** in Vercel dashboard (preview URLs otherwise inherit prod creds)
 
 ## Environment Variables
 | Variable | Purpose | Where stored |
@@ -63,11 +66,13 @@ Not yet deployed. Next.js with an API route → needs a Node host (Vercel / Clou
 | `SMTP_USER` | SMTP login | `.env.local` / hosting env |
 | `SMTP_PASS` | SMTP app password | `.env.local` / hosting env |
 | `SMTP_FROM` | Optional From header (defaults to `SMTP_USER`) | `.env.local` / hosting env |
-| `CALLBACK_TO` | Recipient inbox (default `yut.klintsi@yandex.ru`) | `.env.local` / hosting env |
+| `CALLBACK_TO` | Recipient inbox (REQUIRED — 503 if missing) | `.env.local` / Vercel Production |
 
 ## Known Issues & Gotchas
-- **Multiple lockfiles warning** — there is a stray `/Users/iibot/package-lock.json` at $HOME. Next.js logs a workspace-root warning on startup but runs fine. Set `outputFileTracingRoot` in `next.config.js` or delete the stray lockfile to silence.
-- **README.md is stale** — says the stack is React + Vite 6 and `npm run build` outputs to `app/`. Actual stack is Next.js; the old Vite build is preserved in `app_legacy_build/`.
-- **`/api/callback` fails without SMTP env** — returns 500 "Ошибка отправки. Проверьте настройки почты на сервере." Configure `.env.local` before submitting forms locally.
-- **No yarn** — `yarn.lock` exists but yarn isn't installed on this Mac. Use `npm` (a `package-lock.json` was generated on first install).
-- **`next.config.js` uses ESM `export default`** — `package.json` has `"type": "module"`, so keep `.js` + ESM (don't switch to `.cjs`).
+- **Multiple lockfiles warning** — stray `/Users/iibot/package-lock.json` at $HOME causes Next.js workspace-root warning. Harmless.
+- **README.md is stale** — says Vite 6, but stack is Next.js 15.
+- **`/api/callback` returns 503 without SMTP env** — generic error (won't leak details). Configure Vercel env vars, scoped to Production only.
+- **Rate limit**: `/api/callback` allows 5 requests / 60s per IP. In-memory bucket, per serverless isolate. Not shared across regions — good enough for single-attacker flood, weak vs distributed.
+- **bookonline24.ru widget** has full DOM access via CSP `script-src`. Single point of failure — their compromise = your compromise. Monitor provider security.
+- **`next.config.js` uses ESM `export default`** — `package.json` has `"type": "module"`, keep `.js` + ESM.
+- **CSP `unsafe-inline` + `unsafe-eval`** on scripts — needed for Next hydration + bookonline24 widget. Tighter with nonce middleware is possible but not worth churn for brochure site.

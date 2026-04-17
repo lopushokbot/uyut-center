@@ -275,12 +275,6 @@ export default function BookingStrip({
               onError: (error) => {
                 console.error("HotelWidget onError", error);
               },
-              onInit: () => {
-                console.log("HotelWidget onInit");
-              },
-              onBooking: (value) => {
-                console.log("HotelWidget onBooking", value);
-              },
             },
           });
           widgetInitialized = true;
